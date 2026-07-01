@@ -13,52 +13,51 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --blue:        #1a73e8;
-    --blue-hover:  #1557b0;
-    --blue-bg:     #e8f0fe;
-    --blue-text:   #1557b0;
-    --green-bg:    #e6f4ea;
-    --green-text:  #137333;
-    --green-border:#a8d5b5;
-    --red-bg:      #fce8e6;
-    --red-text:    #c5221f;
-    --red-border:  #f4b8b5;
-    --surface:     #ffffff;
-    --surface-sub: #f8f9fa;
-    --border:      #e0e0e0;
-    --border-strong: #c4c4c4;
-    --text:        #1a1a1a;
-    --text-muted:  #6b7280;
-    --text-hint:   #9ca3af;
-    --radius-sm:   6px;
-    --radius:      10px;
-    --radius-lg:   16px;
+    --blue:         #1a73e8;
+    --blue-hover:   #1557b0;
+    --blue-bg:      #e8f0fe;
+    --blue-text:    #1557b0;
+    --green-bg:     #e6f4ea;
+    --green-text:   #137333;
+    --green-border: #a8d5b5;
+    --red-bg:       #fce8e6;
+    --red-text:     #c5221f;
+    --red-border:   #f4b8b5;
+    --surface:      #ffffff;
+    --surface-sub:  #f8f9fa;
+    --border:       #e0e0e0;
+    --border-strong:#c4c4c4;
+    --text:         #1a1a1a;
+    --text-muted:   #6b7280;
+    --text-hint:    #9ca3af;
+    --radius-sm:    6px;
+    --radius:       10px;
+    --radius-lg:    16px;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --blue:        #4d90fe;
-      --blue-hover:  #7aaeff;
-      --blue-bg:     #1a2744;
-      --blue-text:   #8ab4f8;
-      --green-bg:    #0d2818;
-      --green-text:  #81c995;
-      --green-border:#2d6a3f;
-      --red-bg:      #2c1210;
-      --red-text:    #f28b82;
-      --red-border:  #6e2b28;
-      --surface:     #1e1e1e;
-      --surface-sub: #141414;
-      --border:      #2e2e2e;
+      --blue:         #4d90fe;
+      --blue-hover:   #7aaeff;
+      --blue-bg:      #1a2744;
+      --blue-text:    #8ab4f8;
+      --green-bg:     #0d2818;
+      --green-text:   #81c995;
+      --green-border: #2d6a3f;
+      --red-bg:       #2c1210;
+      --red-text:     #f28b82;
+      --red-border:   #6e2b28;
+      --surface:      #1e1e1e;
+      --surface-sub:  #141414;
+      --border:       #2e2e2e;
       --border-strong:#444444;
-      --text:        #e8e8e8;
-      --text-muted:  #9ca3af;
-      --text-hint:   #6b7280;
+      --text:         #e8e8e8;
+      --text-muted:   #9ca3af;
+      --text-hint:    #6b7280;
     }
   }
 
   html { height: 100%; }
-
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: var(--surface-sub);
@@ -83,740 +82,264 @@
     justify-content: space-between;
     margin-bottom: 12px;
   }
-  .header-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .header-brand { display: flex; align-items: center; gap: 8px; }
   .header-icon {
     width: 32px; height: 32px;
     background: var(--blue-bg);
     border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--blue);
-    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--blue); font-size: 16px;
   }
-  .header h1 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.2px;
-  }
-  .header-sub {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 400;
-  }
+  .header h1 { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -0.2px; }
+  .header-sub { font-size: 12px; color: var(--text-muted); font-weight: 400; }
+
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+
   .btn-import-open {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--surface);
-    color: var(--blue-text);
+    display: flex; align-items: center; gap: 6px;
+    background: var(--surface); color: var(--blue-text);
     border: 1px solid var(--blue-text);
     border-radius: var(--radius-sm);
-    padding: 7px 12px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    white-space: nowrap;
+    padding: 7px 12px; font-size: 13px; font-weight: 500;
+    cursor: pointer; white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
-    transition: background 0.15s;
   }
   .btn-import-open:active { background: var(--blue-bg); }
+
   .btn-add {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--blue);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 8px 12px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+    background: var(--blue); color: #fff;
+    border: none; border-radius: var(--radius-sm);
+    padding: 8px 12px; font-size: 13px; font-weight: 500;
+    cursor: pointer; white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
     transition: background 0.15s;
   }
   .btn-add:active { background: var(--blue-hover); }
 
   /* ── STATS ── */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    padding: 12px 16px 0;
-  }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .stat {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 12px;
-    text-align: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 12px; text-align: center;
   }
-  .stat-val {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
+  .stat-val { font-size: 20px; font-weight: 700; line-height: 1; color: var(--text); margin-bottom: 4px; }
   .stat-val.blue  { color: var(--blue); }
   .stat-val.green { color: var(--green-text); }
   .stat-val.red   { color: var(--red-text); }
-  .stat-lbl {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 400;
-  }
+  .stat-lbl { font-size: 11px; color: var(--text-muted); }
 
   /* ── TOOLBAR ── */
-  .toolbar {
-    padding: 10px 16px 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .search-box {
-    position: relative;
-  }
-  .search-box i {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-hint);
-    font-size: 16px;
-    pointer-events: none;
-  }
+  .toolbar { padding: 10px 16px 8px; display: flex; flex-direction: column; gap: 8px; }
+  .search-box { position: relative; }
+  .search-box i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-hint); font-size: 16px; pointer-events: none; }
   .search-box input {
-    width: 100%;
-    padding: 9px 12px 9px 34px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    -webkit-appearance: none;
+    width: 100%; padding: 9px 12px 9px 34px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    font-size: 13px; background: var(--surface); color: var(--text);
+    outline: none; -webkit-appearance: none;
   }
   .search-box input::placeholder { color: var(--text-hint); }
   .search-box input:focus { border-color: var(--blue); }
 
-  .filters {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+  .filters { display: flex; gap: 6px; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
   .filters::-webkit-scrollbar { display: none; }
   .filter-pill {
-    padding: 5px 12px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-    cursor: pointer;
-    white-space: nowrap;
-    -webkit-tap-highlight-color: transparent;
-    transition: all 0.15s;
+    padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border);
+    background: var(--surface); font-size: 12px; font-weight: 500;
+    color: var(--text-muted); cursor: pointer; white-space: nowrap;
+    -webkit-tap-highlight-color: transparent; transition: all 0.15s;
   }
-  .filter-pill.active {
-    background: var(--blue-bg);
-    border-color: transparent;
-    color: var(--blue-text);
-  }
+  .filter-pill.active { background: var(--blue-bg); border-color: transparent; color: var(--blue-text); }
 
   /* ── LIST ── */
-  .list-wrap {
-    padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
-  }
+  .list-wrap { padding: 8px 16px calc(24px + env(safe-area-inset-bottom)); }
   .section-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-hint);
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    padding: 8px 0 6px;
+    font-size: 11px; font-weight: 600; color: var(--text-hint);
+    text-transform: uppercase; letter-spacing: 0.6px; padding: 8px 0 6px;
   }
 
   .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: 8px;
-    overflow: hidden;
-    transition: border-color 0.15s;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 8px; overflow: hidden;
   }
   .card-inner { padding: 12px 14px; }
-  .card-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 6px;
-  }
-  .card-nama {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.35;
-    flex: 1;
-  }
-  .badge {
-    flex-shrink: 0;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 20px;
-    line-height: 1.4;
-  }
-  .badge.sudah {
-    background: var(--green-bg);
-    color: var(--green-text);
-    border: 1px solid var(--green-border);
-  }
-  .badge.belum {
-    background: var(--red-bg);
-    color: var(--red-text);
-    border: 1px solid var(--red-border);
-  }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+  .card-nama { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.35; flex: 1; }
+  .badge { flex-shrink: 0; font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 20px; line-height: 1.4; }
+  .badge.sudah { background: var(--green-bg); color: var(--green-text); border: 1px solid var(--green-border); }
+  .badge.belum { background: var(--red-bg);   color: var(--red-text);   border: 1px solid var(--red-border); }
 
-  .card-perihal {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-    line-height: 1.4;
-  }
-  .card-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .card-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-    color: var(--text-hint);
-  }
+  .card-perihal { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; line-height: 1.4; }
+  .card-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .card-meta-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-hint); }
   .card-meta-item i { font-size: 13px; }
   .card-ket {
-    margin-top: 6px;
-    font-size: 12px;
-    color: var(--text-hint);
-    padding: 6px 8px;
-    background: var(--surface-sub);
-    border-radius: var(--radius-sm);
-    line-height: 1.4;
+    margin-top: 6px; font-size: 12px; color: var(--text-hint);
+    padding: 6px 8px; background: var(--surface-sub);
+    border-radius: var(--radius-sm); line-height: 1.4;
   }
 
-  .card-actions {
-    border-top: 1px solid var(--border);
-    display: flex;
-  }
+  .card-actions { border-top: 1px solid var(--border); display: flex; }
   .card-btn {
-    flex: 1;
-    padding: 9px 8px;
-    border: none;
-    background: none;
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    -webkit-tap-highlight-color: transparent;
-    transition: background 0.1s, color 0.1s;
+    flex: 1; padding: 9px 8px; border: none; background: none;
+    font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text-muted);
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    -webkit-tap-highlight-color: transparent; transition: background 0.1s, color 0.1s;
   }
   .card-btn:active { background: var(--surface-sub); }
   .card-btn i { font-size: 14px; }
-  .card-btn.btn-kirim { color: var(--blue-text); }
+  .card-btn.btn-kirim   { color: var(--blue-text); }
   .card-btn.btn-kirim:active { background: var(--blue-bg); }
-  .card-btn.btn-unkirim { color: var(--text-muted); }
-  .card-btn.btn-hapus { color: var(--red-text); }
+  .card-btn.btn-hapus   { color: var(--red-text); }
   .card-btn.btn-hapus:active { background: var(--red-bg); }
   .card-divider { width: 1px; background: var(--border); flex-shrink: 0; }
-
   .card.dimmed { opacity: 0.45; pointer-events: none; }
 
   /* ── EMPTY / LOADING ── */
-  .state-box {
-    text-align: center;
-    padding: 48px 24px;
-    color: var(--text-hint);
-  }
-  .state-box i {
-    font-size: 40px;
-    margin-bottom: 12px;
-    display: block;
-    opacity: 0.5;
-  }
-  .state-box p {
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--text-muted);
-  }
+  .state-box { text-align: center; padding: 48px 24px; color: var(--text-hint); }
+  .state-box i { font-size: 40px; margin-bottom: 12px; display: block; opacity: 0.5; }
+  .state-box p { font-size: 13px; line-height: 1.5; color: var(--text-muted); }
   .spinner {
-    width: 28px; height: 28px;
-    border: 2.5px solid var(--border);
-    border-top-color: var(--blue);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    margin: 0 auto 12px;
+    width: 28px; height: 28px; border: 2.5px solid var(--border);
+    border-top-color: var(--blue); border-radius: 50%;
+    animation: spin 0.7s linear infinite; margin: 0 auto 12px;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ── MODAL ── */
+  /* ── MODAL / SHEET ── */
   .overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 200;
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.4); z-index: 200;
     align-items: flex-end;
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
   }
   .overlay.open { display: flex; }
-
   .sheet {
-    background: var(--surface);
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     padding: 0 0 calc(20px + env(safe-area-inset-bottom));
-    width: 100%;
-    max-width: 540px;
-    margin: 0 auto;
+    width: 100%; max-width: 540px; margin: 0 auto;
     animation: slideUp 0.2s ease;
   }
-  @keyframes slideUp {
-    from { transform: translateY(40px); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
-  }
+  @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-  .sheet-handle {
-    width: 36px; height: 4px;
-    background: var(--border-strong);
-    border-radius: 2px;
-    margin: 10px auto 16px;
-  }
+  .sheet-handle { width: 36px; height: 4px; background: var(--border-strong); border-radius: 2px; margin: 10px auto 16px; }
   .sheet-header {
-    padding: 0 16px 14px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 0 16px 14px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
   }
-  .sheet-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-  }
+  .sheet-title { font-size: 15px; font-weight: 600; color: var(--text); }
   .btn-close {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    border: none;
-    background: var(--surface-sub);
-    color: var(--text-muted);
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%; border: none;
+    background: var(--surface-sub); color: var(--text-muted); font-size: 14px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
     -webkit-tap-highlight-color: transparent;
   }
-
   .sheet-body { padding: 16px; }
 
   .field { margin-bottom: 14px; }
-  .field label {
-    display: block;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-    margin-bottom: 5px;
-  }
+  .field label { display: block; font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 5px; }
   .field input, .field textarea {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-family: inherit;
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    -webkit-appearance: none;
-    transition: border-color 0.15s;
+    width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); font-size: 14px; font-family: inherit;
+    background: var(--surface); color: var(--text); outline: none;
+    -webkit-appearance: none; transition: border-color 0.15s;
   }
-  .field input::placeholder,
-  .field textarea::placeholder { color: var(--text-hint); }
+  .field input::placeholder, .field textarea::placeholder { color: var(--text-hint); }
   .field input:focus, .field textarea:focus { border-color: var(--blue); }
   .field textarea { resize: none; height: 70px; line-height: 1.5; }
   .field-req { color: var(--red-text); margin-left: 2px; }
 
-  .sheet-actions {
-    padding: 0 16px;
-    display: flex;
-    gap: 10px;
-  }
+  .sheet-actions { padding: 0 16px; display: flex; gap: 10px; }
   .btn-cancel {
-    flex: 1;
-    padding: 11px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: var(--surface);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    color: var(--text-muted);
+    flex: 1; padding: 11px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--surface);
+    font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text-muted);
     -webkit-tap-highlight-color: transparent;
   }
   .btn-save {
-    flex: 2;
-    padding: 11px;
-    border-radius: var(--radius-sm);
-    border: none;
-    background: var(--blue);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    transition: background 0.15s;
+    flex: 2; padding: 11px; border-radius: var(--radius-sm); border: none;
+    background: var(--blue); color: #fff; font-size: 14px; font-weight: 500;
+    cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background 0.15s;
   }
   .btn-save:active { background: var(--blue-hover); }
   .btn-save:disabled { opacity: 0.55; cursor: not-allowed; }
 
-  .card-btn.btn-edit { color: var(--text-muted); }
-  .card-btn.btn-edit:active { background: var(--surface-sub); }
-
-  .card-foto {
-    margin-top: 8px;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    position: relative;
-  }
-  .card-foto img {
-    width: 100%;
-    max-height: 160px;
-    object-fit: cover;
-    display: block;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-  }
-  .card-foto-placeholder {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--text-hint);
-    padding: 6px 0;
-  }
-  .card-foto-placeholder i { font-size: 14px; }
-  .btn-foto-hapus {
-    position: absolute;
-    top: 6px; right: 6px;
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.55);
-    border: none;
-    color: #fff;
-    font-size: 12px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* ── MODAL FOTO ── */
-  .foto-dropzone {
-    border: 2px dashed var(--border-strong);
-    border-radius: var(--radius);
-    padding: 24px 16px;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    transition: border-color 0.15s, background 0.15s;
-    margin-bottom: 12px;
-  }
-  .foto-dropzone.drag-over {
-    border-color: var(--blue);
-    background: var(--blue-bg);
-  }
-  .foto-dropzone input[type=file] {
-    position: absolute; inset: 0; opacity: 0;
-    cursor: pointer; width: 100%; height: 100%;
-  }
-  .foto-dropzone i { font-size: 32px; color: var(--text-hint); display: block; margin-bottom: 8px; }
-  .foto-dropzone p { font-size: 13px; color: var(--text-muted); }
-  .foto-dropzone small { font-size: 11px; color: var(--text-hint); }
-
-  .foto-preview-wrap { display: none; margin-bottom: 12px; }
-  .foto-preview-wrap.visible { display: block; }
-  .foto-preview-wrap img {
-    width: 100%; max-height: 220px; object-fit: contain;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: var(--surface-sub);
-  }
-  .foto-preview-info {
-    display: flex; align-items: center; gap: 8px;
-    margin-top: 8px; font-size: 12px; color: var(--text-muted);
-  }
-  .foto-preview-info i { font-size: 14px; }
-  .btn-ganti-foto {
-    margin-left: auto;
-    font-size: 12px; color: var(--blue-text);
-    background: none; border: none; cursor: pointer;
-    font-weight: 500; padding: 0;
-  }
-
-  .foto-upload-progress {
-    display: none; margin-top: 10px;
-  }
-  .foto-upload-progress.visible { display: block; }
-  .foto-progress-bar-wrap {
-    height: 3px; background: var(--border); border-radius: 2px; overflow: hidden;
-  }
-  .foto-progress-bar {
-    height: 100%; background: var(--blue);
-    border-radius: 2px; width: 0%; transition: width 0.3s;
-  }
-  .foto-progress-label {
-    font-size: 11px; color: var(--text-hint);
-    text-align: center; margin-top: 6px;
-  }
-
-  .btn-upload-foto {
-    flex: 2; padding: 11px; border-radius: var(--radius-sm);
-    border: none; background: var(--blue); color: #fff;
-    font-size: 14px; font-weight: 500; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .btn-upload-foto:active { background: var(--blue-hover); }
-  .btn-upload-foto:disabled { opacity: 0.55; cursor: not-allowed; }
-
-  /* lightbox */
-  .lightbox {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.88); z-index: 500;
-    align-items: center; justify-content: center;
-    padding: 20px;
-  }
-  .lightbox.open { display: flex; }
-  .lightbox img {
-    max-width: 100%; max-height: 90vh;
-    object-fit: contain; border-radius: var(--radius-sm);
-  }
-  .lightbox-close {
-    position: absolute; top: 16px; right: 16px;
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(255,255,255,0.15); border: none;
-    color: #fff; font-size: 18px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .card-btn.btn-foto { color: var(--text-muted); }
-
-  /* ── STATUS TOGGLE di modal edit ── */
-  .status-toggle {
-    display: flex;
-    gap: 8px;
-    margin-top: 2px;
-  }
+  /* ── STATUS TOGGLE (modal edit) ── */
+  .status-toggle { display: flex; gap: 8px; margin-top: 2px; }
   .status-opt {
-    flex: 1;
-    padding: 10px 8px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border);
-    background: var(--surface);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    text-align: center;
-    color: var(--text-muted);
-    transition: all 0.15s;
+    flex: 1; padding: 10px 8px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); background: var(--surface);
+    font-size: 13px; font-weight: 500; cursor: pointer; text-align: center;
+    color: var(--text-muted); transition: all 0.15s;
     -webkit-tap-highlight-color: transparent;
   }
-  .status-opt.active-belum {
-    border-color: var(--red-text);
-    background: var(--red-bg);
-    color: var(--red-text);
-  }
-  .status-opt.active-sudah {
-    border-color: var(--green-text);
-    background: var(--green-bg);
-    color: var(--green-text);
-  }
+  .status-opt.active-belum { border-color: var(--red-text);   background: var(--red-bg);   color: var(--red-text); }
+  .status-opt.active-sudah { border-color: var(--green-text); background: var(--green-bg); color: var(--green-text); }
 
-  /* ── IMPORT SHEET ── */
+  /* ── IMPORT ── */
   .import-dropzone {
-    border: 2px dashed var(--border-strong);
-    border-radius: var(--radius);
-    padding: 28px 16px;
-    text-align: center;
-    cursor: pointer;
+    border: 2px dashed var(--border-strong); border-radius: var(--radius);
+    padding: 28px 16px; text-align: center; cursor: pointer;
     transition: border-color 0.15s, background 0.15s;
-    margin-bottom: 14px;
-    position: relative;
+    margin-bottom: 14px; position: relative;
   }
-  .import-dropzone.drag-over {
-    border-color: var(--blue);
-    background: var(--blue-bg);
-  }
-  .import-dropzone input[type=file] {
-    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-  }
-  .import-dropzone i {
-    font-size: 32px; color: var(--text-hint);
-    display: block; margin-bottom: 8px;
-  }
+  .import-dropzone.drag-over { border-color: var(--blue); background: var(--blue-bg); }
+  .import-dropzone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .import-dropzone i { font-size: 32px; color: var(--text-hint); display: block; margin-bottom: 8px; }
   .import-dropzone p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
   .import-dropzone small { font-size: 11px; color: var(--text-hint); }
 
-  .import-preview-wrap {
-    display: none;
-    margin-bottom: 12px;
-  }
+  .import-preview-wrap { display: none; margin-bottom: 12px; }
   .import-preview-wrap.visible { display: block; }
-
   .import-file-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 10px;
-    background: var(--blue-bg);
-    border-radius: var(--radius-sm);
-    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+    background: var(--blue-bg); border-radius: var(--radius-sm); margin-bottom: 10px;
   }
   .import-file-info i { color: var(--blue-text); font-size: 16px; }
   .import-file-name { font-size: 12px; font-weight: 500; color: var(--blue-text); flex: 1; }
   .import-file-count { font-size: 11px; color: var(--blue-text); opacity: 0.8; }
-  .btn-clear-file {
-    border: none; background: none; cursor: pointer;
-    color: var(--blue-text); font-size: 14px; padding: 2px;
-    display: flex; align-items: center;
-  }
+  .btn-clear-file { border: none; background: none; cursor: pointer; color: var(--blue-text); font-size: 14px; padding: 2px; display: flex; align-items: center; }
 
-  .import-table-wrap {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-  .import-table {
-    width: 100%; border-collapse: collapse; font-size: 12px;
-  }
+  .import-table-wrap { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; max-height: 200px; overflow-y: auto; }
+  .import-table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .import-table thead th {
-    background: var(--surface-sub);
-    padding: 7px 10px;
-    text-align: left;
-    font-weight: 600;
-    color: var(--text-muted);
-    font-size: 11px;
-    border-bottom: 1px solid var(--border);
-    position: sticky; top: 0;
+    background: var(--surface-sub); padding: 7px 10px; text-align: left;
+    font-weight: 600; color: var(--text-muted); font-size: 11px;
+    border-bottom: 1px solid var(--border); position: sticky; top: 0;
   }
   .import-table tbody td {
-    padding: 7px 10px;
-    border-bottom: 1px solid var(--border);
-    color: var(--text);
-    vertical-align: top;
-    max-width: 120px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text);
+    vertical-align: top; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .import-table tbody tr:last-child td { border-bottom: none; }
   .import-table tbody tr.err-row td { background: var(--red-bg); color: var(--red-text); }
-
-  .import-error {
-    margin-top: 8px;
-    padding: 8px 10px;
-    background: var(--red-bg);
-    border-radius: var(--radius-sm);
-    font-size: 12px;
-    color: var(--red-text);
-    display: none;
-  }
+  .import-error { margin-top: 8px; padding: 8px 10px; background: var(--red-bg); border-radius: var(--radius-sm); font-size: 12px; color: var(--red-text); display: none; }
   .import-error.visible { display: block; }
+  .import-format-hint { font-size: 11px; color: var(--text-hint); text-align: center; margin-top: 8px; line-height: 1.6; }
 
-  .import-format-hint {
-    font-size: 11px;
-    color: var(--text-hint);
-    text-align: center;
-    margin-top: 8px;
-    line-height: 1.6;
-  }
+  .progress-bar-wrap { height: 3px; background: var(--border); border-radius: 2px; margin-top: 10px; overflow: hidden; display: none; }
+  .progress-bar-wrap.visible { display: block; }
+  .progress-bar { height: 100%; background: var(--blue); border-radius: 2px; width: 0%; transition: width 0.2s; }
 
   .btn-import {
-    flex: 2;
-    padding: 11px;
-    border-radius: var(--radius-sm);
-    border: none;
-    background: var(--blue);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+    flex: 2; padding: 11px; border-radius: var(--radius-sm); border: none;
+    background: var(--blue); color: #fff; font-size: 14px; font-weight: 500;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+    -webkit-tap-highlight-color: transparent;
   }
   .btn-import:active { background: var(--blue-hover); }
   .btn-import:disabled { opacity: 0.55; cursor: not-allowed; }
 
-  .progress-bar-wrap {
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    margin-top: 10px;
-    overflow: hidden;
-    display: none;
-  }
-  .progress-bar-wrap.visible { display: block; }
-  .progress-bar {
-    height: 100%;
-    background: var(--blue);
-    border-radius: 2px;
-    width: 0%;
-    transition: width 0.2s;
-  }
-
   /* ── TOAST ── */
   .toast {
-    position: fixed;
-    bottom: calc(16px + env(safe-area-inset-bottom));
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    background: var(--text);
-    color: var(--surface);
-    padding: 9px 18px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
-    z-index: 400;
-    opacity: 0;
-    transition: opacity 0.2s, transform 0.2s;
-    white-space: nowrap;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    position: fixed; bottom: calc(16px + env(safe-area-inset-bottom));
+    left: 50%; transform: translateX(-50%) translateY(10px);
+    background: var(--text); color: var(--surface);
+    padding: 9px 18px; border-radius: 20px; font-size: 13px; font-weight: 500;
+    z-index: 400; opacity: 0; transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap; pointer-events: none;
+    display: flex; align-items: center; gap: 6px;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   .toast i { font-size: 14px; }
@@ -828,40 +351,25 @@
 <header class="header">
   <div class="header-top">
     <div class="header-brand">
-      <div class="header-icon" aria-hidden="true">
-        <i class="ti ti-mail"></i>
-      </div>
+      <div class="header-icon" aria-hidden="true"><i class="ti ti-mail"></i></div>
       <div>
         <h1>Manajemen Surat</h1>
         <p class="header-sub" id="subtitle">Memuat data...</p>
       </div>
     </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <button class="btn-import-open" onclick="bukaModalImport()" aria-label="Import dari Excel">
-          <i class="ti ti-file-import" aria-hidden="true"></i>
-          Import
-        </button>
-        <button class="btn-add" onclick="bukaModal()" aria-label="Tambah surat baru">
-          <i class="ti ti-plus" aria-hidden="true"></i>
-          Tambah
-        </button>
-      </div>
+    <div class="header-actions">
+      <button class="btn-import-open" onclick="bukaModalImport()" aria-label="Import dari Excel">
+        <i class="ti ti-file-import" aria-hidden="true"></i>Import
+      </button>
+      <button class="btn-add" onclick="bukaModal()" aria-label="Tambah surat baru">
+        <i class="ti ti-plus" aria-hidden="true"></i>Tambah
+      </button>
+    </div>
   </div>
-
-  <!-- Stats -->
   <div class="stats">
-    <div class="stat">
-      <div class="stat-val blue" id="stat-total">—</div>
-      <div class="stat-lbl">Total</div>
-    </div>
-    <div class="stat">
-      <div class="stat-val green" id="stat-sudah">—</div>
-      <div class="stat-lbl">Terkirim</div>
-    </div>
-    <div class="stat">
-      <div class="stat-val red" id="stat-belum">—</div>
-      <div class="stat-lbl">Belum kirim</div>
-    </div>
+    <div class="stat"><div class="stat-val blue" id="stat-total">—</div><div class="stat-lbl">Total</div></div>
+    <div class="stat"><div class="stat-val green" id="stat-sudah">—</div><div class="stat-lbl">Terkirim</div></div>
+    <div class="stat"><div class="stat-val red" id="stat-belum">—</div><div class="stat-lbl">Belum kirim</div></div>
   </div>
 </header>
 
@@ -880,10 +388,7 @@
 
 <!-- LIST -->
 <main class="list-wrap" id="list" aria-live="polite">
-  <div class="state-box">
-    <div class="spinner"></div>
-    <p>Memuat data surat...</p>
-  </div>
+  <div class="state-box"><div class="spinner"></div><p>Memuat data surat...</p></div>
 </main>
 
 <!-- MODAL TAMBAH -->
@@ -892,9 +397,7 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
       <span class="sheet-title">Surat baru</span>
-      <button class="btn-close" onclick="tutupModal()" aria-label="Tutup">
-        <i class="ti ti-x" aria-hidden="true"></i>
-      </button>
+      <button class="btn-close" onclick="tutupModal()" aria-label="Tutup"><i class="ti ti-x" aria-hidden="true"></i></button>
     </div>
     <div class="sheet-body">
       <div class="field">
@@ -923,9 +426,7 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header">
       <span class="sheet-title">Edit surat</span>
-      <button class="btn-close" onclick="tutupEdit()" aria-label="Tutup">
-        <i class="ti ti-x" aria-hidden="true"></i>
-      </button>
+      <button class="btn-close" onclick="tutupEdit()" aria-label="Tutup"><i class="ti ti-x" aria-hidden="true"></i></button>
     </div>
     <div class="sheet-body">
       <input type="hidden" id="e-id">
@@ -944,12 +445,8 @@
       <div class="field">
         <label>Status pengiriman</label>
         <div class="status-toggle">
-          <button class="status-opt" id="e-status-belum" onclick="setStatusEdit('Belum Dikirim')">
-            Belum dikirim
-          </button>
-          <button class="status-opt" id="e-status-sudah" onclick="setStatusEdit('Sudah Dikirim')">
-            Sudah terkirim
-          </button>
+          <button class="status-opt" id="e-status-belum" onclick="setStatusEdit('Belum Dikirim')">Belum dikirim</button>
+          <button class="status-opt" id="e-status-sudah" onclick="setStatusEdit('Sudah Dikirim')">Sudah terkirim</button>
         </div>
       </div>
     </div>
@@ -960,82 +457,15 @@
   </div>
 </div>
 
-<!-- MODAL FOTO -->
-<div class="overlay" id="modal-foto" role="dialog" aria-modal="true" aria-label="Upload foto bukti" onclick="overlayFotoClick(event)">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-      <div>
-        <span class="sheet-title">Foto bukti pengiriman</span>
-        <div style="font-size:11px;color:var(--text-hint);margin-top:2px" id="foto-modal-sub"></div>
-      </div>
-      <button class="btn-close" onclick="tutupModalFoto()" aria-label="Tutup">
-        <i class="ti ti-x" aria-hidden="true"></i>
-      </button>
-    </div>
-    <div class="sheet-body">
-      <input type="hidden" id="foto-surat-id">
-
-      <!-- DROP ZONE -->
-      <div class="foto-dropzone" id="foto-dropzone"
-           ondragover="fotoDzDragOver(event)" ondragleave="fotoDzDragLeave()"  ondrop="fotoDzDrop(event)">
-        <input type="file" id="foto-input" accept="image/*" capture="environment"
-               onchange="handleFotoFile(this.files[0])">
-        <i class="ti ti-camera" aria-hidden="true"></i>
-        <p>Ketuk untuk ambil foto atau pilih dari galeri</p>
-        <small>JPG, PNG, HEIC — maks. 5 MB</small>
-      </div>
-
-      <!-- PREVIEW -->
-      <div class="foto-preview-wrap" id="foto-preview-wrap">
-        <img id="foto-preview-img" src="" alt="Preview foto">
-        <div class="foto-preview-info">
-          <i class="ti ti-photo" aria-hidden="true"></i>
-          <span id="foto-preview-name">—</span>
-          <button class="btn-ganti-foto" onclick="gantiFoto()">Ganti</button>
-        </div>
-      </div>
-
-      <!-- PROGRESS -->
-      <div class="foto-upload-progress" id="foto-progress">
-        <div class="foto-progress-bar-wrap">
-          <div class="foto-progress-bar" id="foto-progress-bar"></div>
-        </div>
-        <div class="foto-progress-label" id="foto-progress-label">Mengompres foto...</div>
-      </div>
-    </div>
-
-    <div class="sheet-actions">
-      <button class="btn-cancel" onclick="tutupModalFoto()">Batal</button>
-      <button class="btn-upload-foto" id="btn-upload-foto" onclick="uploadFoto()" disabled>
-        <i class="ti ti-upload" aria-hidden="true"></i>
-        <span id="btn-upload-label">Upload foto</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="tutupLightbox()">
-  <button class="lightbox-close" aria-label="Tutup">
-    <i class="ti ti-x" aria-hidden="true"></i>
-  </button>
-  <img id="lightbox-img" src="" alt="Foto bukti pengiriman">
-</div>
-
 <!-- MODAL IMPORT -->
 <div class="overlay" id="modal-import" role="dialog" aria-modal="true" aria-label="Import dari Excel" onclick="overlayImportClick(event)">
   <div class="sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
       <span class="sheet-title">Import dari Excel / CSV</span>
-      <button class="btn-close" onclick="tutupModalImport()" aria-label="Tutup">
-        <i class="ti ti-x" aria-hidden="true"></i>
-      </button>
+      <button class="btn-close" onclick="tutupModalImport()" aria-label="Tutup"><i class="ti ti-x" aria-hidden="true"></i></button>
     </div>
     <div class="sheet-body">
-
-      <!-- DROP ZONE -->
       <div class="import-dropzone" id="dropzone"
            ondragover="dzDragOver(event)" ondragleave="dzDragLeave(event)" ondrop="dzDrop(event)">
         <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFile(this.files[0])">
@@ -1043,27 +473,16 @@
         <p>Ketuk untuk pilih file<br>atau seret file ke sini</p>
         <small>Mendukung .xlsx, .xls, .csv</small>
       </div>
-
-      <!-- PREVIEW -->
       <div class="import-preview-wrap" id="import-preview">
         <div class="import-file-info">
           <i class="ti ti-file-check" aria-hidden="true"></i>
           <span class="import-file-name" id="import-filename">—</span>
           <span class="import-file-count" id="import-count"></span>
-          <button class="btn-clear-file" onclick="clearFile()" aria-label="Hapus file">
-            <i class="ti ti-x" aria-hidden="true"></i>
-          </button>
+          <button class="btn-clear-file" onclick="clearFile()" aria-label="Hapus file"><i class="ti ti-x" aria-hidden="true"></i></button>
         </div>
         <div class="import-table-wrap">
-          <table class="import-table" id="import-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Nama Penerima</th>
-                <th>Perihal</th>
-                <th>Keterangan</th>
-              </tr>
-            </thead>
+          <table class="import-table">
+            <thead><tr><th>#</th><th>Nama Penerima</th><th>Perihal</th><th>Keterangan</th></tr></thead>
             <tbody id="import-tbody"></tbody>
           </table>
         </div>
@@ -1072,13 +491,11 @@
           <div class="progress-bar" id="progress-bar"></div>
         </div>
       </div>
-
       <div class="import-format-hint">
         Format kolom: <strong>Nama Penerima</strong> · <strong>Perihal</strong> · <strong>Keterangan</strong><br>
         Baris pertama adalah header (akan dilewati otomatis)
       </div>
     </div>
-
     <div class="sheet-actions">
       <button class="btn-cancel" onclick="tutupModalImport()">Batal</button>
       <button class="btn-import" id="btn-import" onclick="jalankanImport()" disabled>
@@ -1098,28 +515,22 @@
 <script>
   const BASE_URL = "https://script.google.com/macros/s/AKfycbxn32U81yG0ckhSvXXY_AjAlp0u7yT5CNtnfDyQcU3YYfirEx69Dseuor7aTHc_aQZy8g/exec";
 
-  let semuaData = [];
+  let semuaData  = [];
   let filterAktif = "semua";
 
   async function api(params) {
-    const url = BASE_URL + "?" + new URLSearchParams(params).toString();
+    const url  = BASE_URL + "?" + new URLSearchParams(params).toString();
     const resp = await fetch(url, { redirect: "follow" });
     return resp.json();
   }
 
+  // ── DATA ──
   async function muat() {
     try {
       const r = await api({ action: "getAll" });
-      if (r.ok) {
-        semuaData = r.data;
-        updateStats();
-        renderList();
-      } else {
-        tampilError("Gagal memuat data");
-      }
-    } catch(e) {
-      tampilError("Tidak dapat terhubung ke server");
-    }
+      if (r.ok) { semuaData = r.data; updateStats(); renderList(); }
+      else tampilError("Gagal memuat data");
+    } catch(e) { tampilError("Tidak dapat terhubung ke server"); }
   }
 
   function updateStats() {
@@ -1129,8 +540,7 @@
     document.getElementById("stat-sudah").textContent = sudah;
     document.getElementById("stat-belum").textContent = belum;
     document.getElementById("subtitle").textContent =
-      semuaData.length === 0 ? "Belum ada surat" :
-      semuaData.length + " surat tercatat";
+      semuaData.length === 0 ? "Belum ada surat" : semuaData.length + " surat tercatat";
   }
 
   function renderList() {
@@ -1144,7 +554,6 @@
     );
 
     const el = document.getElementById("list");
-
     if (data.length === 0) {
       const msg = q ? "Tidak ada hasil untuk pencarian ini"
         : filterAktif !== "semua" ? "Tidak ada surat dengan status ini"
@@ -1155,74 +564,49 @@
 
     const belumList = data.filter(s => s.status === "Belum Dikirim");
     const sudahList = data.filter(s => s.status === "Sudah Dikirim");
-
     let html = "";
 
-    if (belumList.length && filterAktif === "semua") {
-      html += `<div class="section-label">Belum dikirim · ${belumList.length}</div>`;
-      html += belumList.map(kartu).join("");
-    } else if (filterAktif === "belum") {
-      html += belumList.map(kartu).join("");
+    if (q) {
+      html = data.map(kartu).join("");
+    } else {
+      if (belumList.length) {
+        if (filterAktif === "semua") html += `<div class="section-label">Belum dikirim · ${belumList.length}</div>`;
+        html += belumList.map(kartu).join("");
+      }
+      if (sudahList.length) {
+        if (filterAktif === "semua") html += `<div class="section-label" style="margin-top:8px">Sudah terkirim · ${sudahList.length}</div>`;
+        html += sudahList.map(kartu).join("");
+      }
     }
-
-    if (sudahList.length && filterAktif === "semua") {
-      html += `<div class="section-label" style="margin-top:8px">Sudah terkirim · ${sudahList.length}</div>`;
-      html += sudahList.map(kartu).join("");
-    } else if (filterAktif === "sudah") {
-      html += sudahList.map(kartu).join("");
-    }
-
-    if (q) { html = data.map(kartu).join(""); }
 
     el.innerHTML = html;
   }
 
   function kartu(s) {
-    const cls = s.status === "Sudah Dikirim" ? "sudah" : "belum";
-    const tgl = s.tanggal
-      ? `<div class="card-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i>${s.tanggal}</div>`
-      : "";
-    const ket = s.keterangan
-      ? `<div class="card-ket">${escHtml(s.keterangan)}</div>`
-      : "";
-    const aksiIcon  = cls === "sudah" ? "ti-circle-x"    : "ti-circle-check";
-    const aksiLabel = cls === "sudah" ? "Tandai belum"   : "Tandai terkirim";
-    const aksiCls   = cls === "sudah" ? "btn-unkirim"    : "btn-kirim";
-
-    const fotoHtml = s.fotoUrl
-      ? `<div class="card-foto">
-           <img src="https://drive.google.com/thumbnail?id=${extractDriveId(s.fotoUrl)}&sz=w600"
-                alt="Bukti pengiriman" onclick="bukaLightbox('${escAttr(s.fotoUrl)}')"
-                style="cursor:pointer" loading="lazy"
-                onerror="this.parentElement.innerHTML='<div class=card-foto-placeholder><i class=\\'ti ti-photo-off\\'></i>Foto tidak dapat dimuat</div>'">
-           <button class="btn-foto-hapus" onclick="hapusFoto('${s.id}')" aria-label="Hapus foto">
-             <i class="ti ti-x" aria-hidden="true"></i>
-           </button>
-         </div>`
-      : "";
+    const cls      = s.status === "Sudah Dikirim" ? "sudah" : "belum";
+    const aksiIcon = cls === "sudah" ? "ti-circle-x"    : "ti-circle-check";
+    const aksiLbl  = cls === "sudah" ? "Tandai belum"   : "Tandai terkirim";
+    const aksiCls  = cls === "sudah" ? "btn-unkirim"    : "btn-kirim";
+    const tgl      = s.tanggal ? `<div class="card-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i>${s.tanggal}</div>` : "";
+    const ket      = s.keterangan ? `<div class="card-ket">${escHtml(s.keterangan)}</div>` : "";
 
     return `<article class="card" id="card-${s.id}">
       <div class="card-inner">
         <div class="card-top">
           <div class="card-nama">${escHtml(s.namaPenerima)}</div>
-          <span class="badge ${cls}">${s.status === "Sudah Dikirim" ? "Terkirim" : "Belum kirim"}</span>
+          <span class="badge ${cls}">${cls === "sudah" ? "Terkirim" : "Belum kirim"}</span>
         </div>
         ${s.perihal ? `<div class="card-perihal">${escHtml(s.perihal)}</div>` : ""}
         <div class="card-meta">${tgl}</div>
         ${ket}
-        ${fotoHtml}
       </div>
       <div class="card-actions">
-        <button class="card-btn btn-edit" onclick="bukaEdit('${s.id}')">
+        <button class="card-btn" onclick="bukaEdit('${s.id}')">
           <i class="ti ti-pencil" aria-hidden="true"></i>Edit
         </button>
         <div class="card-divider"></div>
-        <button class="card-btn btn-foto" onclick="bukaModalFoto('${s.id}', '${escAttr(s.namaPenerima)}')">
-          <i class="ti ti-camera" aria-hidden="true"></i>Foto
-        </button>
-        <div class="card-divider"></div>
         <button class="card-btn ${aksiCls}" onclick="toggleStatus('${s.id}')">
-          <i class="ti ${aksiIcon}" aria-hidden="true"></i>${aksiLabel}
+          <i class="ti ${aksiIcon}" aria-hidden="true"></i>${aksiLbl}
         </button>
         <div class="card-divider"></div>
         <button class="card-btn btn-hapus" onclick="hapus('${s.id}', '${escAttr(s.namaPenerima)}')">
@@ -1232,31 +616,21 @@
     </article>`;
   }
 
+  // ── AKSI SURAT ──
   async function simpanSurat() {
-    const nama   = document.getElementById("f-nama").value.trim();
+    const nama    = document.getElementById("f-nama").value.trim();
     const perihal = document.getElementById("f-perihal").value.trim();
-    const ket    = document.getElementById("f-ket").value.trim();
-
-    if (!nama)   { toast("Nama penerima wajib diisi", "warn"); document.getElementById("f-nama").focus(); return; }
-    if (!perihal){ toast("Perihal wajib diisi", "warn"); document.getElementById("f-perihal").focus(); return; }
-
+    const ket     = document.getElementById("f-ket").value.trim();
+    if (!nama)    { toast("Nama penerima wajib diisi", "warn"); document.getElementById("f-nama").focus(); return; }
+    if (!perihal) { toast("Perihal wajib diisi", "warn"); document.getElementById("f-perihal").focus(); return; }
     const btn = document.getElementById("btn-simpan");
     btn.disabled = true; btn.textContent = "Menyimpan...";
-
     try {
       const r = await api({ action: "tambah", nama, perihal, ket });
-      if (r.ok) {
-        tutupModal();
-        toast("Surat berhasil ditambahkan");
-        await muat();
-      } else {
-        toast("Gagal: " + r.pesan, "err");
-      }
-    } catch(e) {
-      toast("Tidak dapat terhubung ke server", "err");
-    } finally {
-      btn.disabled = false; btn.textContent = "Simpan surat";
-    }
+      if (r.ok) { tutupModal(); toast("Surat berhasil ditambahkan"); await muat(); }
+      else toast("Gagal: " + r.pesan, "err");
+    } catch(e) { toast("Tidak dapat terhubung ke server", "err"); }
+    finally { btn.disabled = false; btn.textContent = "Simpan surat"; }
   }
 
   async function toggleStatus(id) {
@@ -1283,89 +657,67 @@
     if (!confirm(`Hapus surat untuk "${nama}"?`)) return;
     try {
       const r = await api({ action: "hapus", id });
-      if (r.ok) {
-        semuaData = semuaData.filter(s => s.id !== id);
-        updateStats(); renderList();
-        toast("Surat dihapus");
-      } else {
-        toast("Gagal: " + r.pesan, "err");
-      }
-    } catch(e) {
-      toast("Tidak dapat terhubung ke server", "err");
-    }
+      if (r.ok) { semuaData = semuaData.filter(s => s.id !== id); updateStats(); renderList(); toast("Surat dihapus"); }
+      else toast("Gagal: " + r.pesan, "err");
+    } catch(e) { toast("Tidak dapat terhubung ke server", "err"); }
   }
 
-  // =============================================
-  // EDIT SURAT
-  // =============================================
+  // ── EDIT ──
   let editStatusSaat = "Belum Dikirim";
 
   function bukaEdit(id) {
     const s = semuaData.find(x => x.id === id);
     if (!s) return;
-    document.getElementById("e-id").value = s.id;
-    document.getElementById("e-nama").value = s.namaPenerima;
+    document.getElementById("e-id").value      = s.id;
+    document.getElementById("e-nama").value    = s.namaPenerima;
     document.getElementById("e-perihal").value = s.perihal;
-    document.getElementById("e-ket").value = s.keterangan || "";
+    document.getElementById("e-ket").value     = s.keterangan || "";
     setStatusEdit(s.status);
     document.getElementById("modal-edit").classList.add("open");
     document.body.style.overflow = "hidden";
     setTimeout(() => document.getElementById("e-nama").focus(), 250);
   }
-
-  function tutupEdit() {
-    document.getElementById("modal-edit").classList.remove("open");
-    document.body.style.overflow = "";
-  }
-
-  function overlayEditClick(e) {
-    if (e.target === document.getElementById("modal-edit")) tutupEdit();
-  }
-
+  function tutupEdit() { document.getElementById("modal-edit").classList.remove("open"); document.body.style.overflow = ""; }
+  function overlayEditClick(e) { if (e.target === document.getElementById("modal-edit")) tutupEdit(); }
   function setStatusEdit(val) {
     editStatusSaat = val;
-    document.getElementById("e-status-belum").className =
-      "status-opt" + (val === "Belum Dikirim" ? " active-belum" : "");
-    document.getElementById("e-status-sudah").className =
-      "status-opt" + (val === "Sudah Dikirim" ? " active-sudah" : "");
+    document.getElementById("e-status-belum").className = "status-opt" + (val === "Belum Dikirim" ? " active-belum" : "");
+    document.getElementById("e-status-sudah").className = "status-opt" + (val === "Sudah Dikirim" ? " active-sudah" : "");
   }
-
   async function simpanEdit() {
     const id      = document.getElementById("e-id").value;
     const nama    = document.getElementById("e-nama").value.trim();
     const perihal = document.getElementById("e-perihal").value.trim();
     const ket     = document.getElementById("e-ket").value.trim();
     const status  = editStatusSaat;
-
     if (!nama)    { toast("Nama penerima wajib diisi", "warn"); document.getElementById("e-nama").focus(); return; }
     if (!perihal) { toast("Perihal wajib diisi", "warn"); document.getElementById("e-perihal").focus(); return; }
-
     const btn = document.getElementById("btn-edit-simpan");
     btn.disabled = true; btn.textContent = "Menyimpan...";
-
     try {
       const r = await api({ action: "edit", id, nama, perihal, ket, status });
       if (r.ok) {
         tutupEdit();
         const idx = semuaData.findIndex(s => s.id === id);
-        if (idx !== -1) {
-          semuaData[idx].namaPenerima = nama;
-          semuaData[idx].perihal = perihal;
-          semuaData[idx].keterangan = ket;
-          semuaData[idx].status = status;
-        }
+        if (idx !== -1) Object.assign(semuaData[idx], { namaPenerima: nama, perihal, keterangan: ket, status });
         updateStats(); renderList();
         toast("Surat berhasil diperbarui");
-      } else {
-        toast("Gagal: " + r.pesan, "err");
-      }
-    } catch(e) {
-      toast("Tidak dapat terhubung ke server", "err");
-    } finally {
-      btn.disabled = false; btn.textContent = "Simpan perubahan";
-    }
+      } else toast("Gagal: " + r.pesan, "err");
+    } catch(e) { toast("Tidak dapat terhubung ke server", "err"); }
+    finally { btn.disabled = false; btn.textContent = "Simpan perubahan"; }
   }
 
+  // ── MODAL TAMBAH ──
+  function bukaModal() {
+    ["f-nama","f-perihal","f-ket"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("modal").classList.add("open");
+    document.body.style.overflow = "hidden";
+    setTimeout(() => document.getElementById("f-nama").focus(), 250);
+  }
+  function tutupModal() { document.getElementById("modal").classList.remove("open"); document.body.style.overflow = ""; }
+  function overlayClick(e) { if (e.target === document.getElementById("modal")) tutupModal(); }
+
+  // ── FILTER ──
   function setFilter(f, btn) {
     filterAktif = f;
     document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
@@ -1373,371 +725,86 @@
     renderList();
   }
 
-  function bukaModal() {
-    ["f-nama","f-perihal","f-ket"].forEach(id => document.getElementById(id).value = "");
-    document.getElementById("modal").classList.add("open");
-    document.body.style.overflow = "hidden";
-    setTimeout(() => document.getElementById("f-nama").focus(), 250);
-  }
-  function tutupModal() {
-    document.getElementById("modal").classList.remove("open");
-    document.body.style.overflow = "";
-  }
-  function overlayClick(e) {
-    if (e.target === document.getElementById("modal")) tutupModal();
-  }
-
+  // ── TOAST ──
   let _toastTimer;
   function toast(msg, type) {
     const el  = document.getElementById("toast");
     const ico = document.getElementById("toast-icon");
-    const txt = document.getElementById("toast-msg");
-    txt.textContent = msg;
-    ico.className = type === "err"  ? "ti ti-alert-circle"
-                  : type === "warn" ? "ti ti-alert-triangle"
-                  : "ti ti-check";
+    document.getElementById("toast-msg").textContent = msg;
+    ico.className = type === "err" ? "ti ti-alert-circle" : type === "warn" ? "ti ti-alert-triangle" : "ti ti-check";
     el.classList.add("show");
     clearTimeout(_toastTimer);
     _toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
   }
 
   function tampilError(msg) {
-    document.getElementById("list").innerHTML =
-      `<div class="state-box"><i class="ti ti-wifi-off" aria-hidden="true"></i><p>${msg}</p></div>`;
+    document.getElementById("list").innerHTML = `<div class="state-box"><i class="ti ti-wifi-off" aria-hidden="true"></i><p>${msg}</p></div>`;
     document.getElementById("subtitle").textContent = "Terjadi kesalahan";
   }
 
-  function escHtml(s) {
-    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-  }
-  function escAttr(s) {
-    return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;");
-  }
+  function escHtml(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  function escAttr(s) { return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;"); }
 
-  // =============================================
-  // FOTO BUKTI
-  // =============================================
-  let fotoFile = null;
-  let fotoBase64 = null;
-  let fotoMime = null;
-
-  function bukaModalFoto(id, nama) {
-    document.getElementById("foto-surat-id").value = id;
-    document.getElementById("foto-modal-sub").textContent = nama;
-    resetFotoModal();
-    document.getElementById("modal-foto").classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
-  function tutupModalFoto() {
-    document.getElementById("modal-foto").classList.remove("open");
-    document.body.style.overflow = "";
-  }
-  function overlayFotoClick(e) {
-    if (e.target === document.getElementById("modal-foto")) tutupModalFoto();
-  }
-  function resetFotoModal() {
-    fotoFile = null; fotoBase64 = null; fotoMime = null;
-    document.getElementById("foto-input").value = "";
-    document.getElementById("foto-dropzone").style.display = "";
-    document.getElementById("foto-preview-wrap").classList.remove("visible");
-    document.getElementById("foto-progress").classList.remove("visible");
-    document.getElementById("foto-progress-bar").style.width = "0%";
-    document.getElementById("btn-upload-foto").disabled = true;
-    document.getElementById("btn-upload-label").textContent = "Upload foto";
-  }
-  function gantiFoto() {
-    document.getElementById("foto-input").value = "";
-    document.getElementById("foto-preview-wrap").classList.remove("visible");
-    document.getElementById("foto-dropzone").style.display = "";
-    document.getElementById("btn-upload-foto").disabled = true;
-    fotoFile = null; fotoBase64 = null;
-  }
-
-  function fotoDzDragOver(e) {
-    e.preventDefault();
-    document.getElementById("foto-dropzone").classList.add("drag-over");
-  }
-  function fotoDzDragLeave() {
-    document.getElementById("foto-dropzone").classList.remove("drag-over");
-  }
-  function fotoDzDrop(e) {
-    e.preventDefault();
-    document.getElementById("foto-dropzone").classList.remove("drag-over");
-    const f = e.dataTransfer.files[0];
-    if (f) handleFotoFile(f);
-  }
-
-  function handleFotoFile(file) {
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      toast("File harus berupa gambar", "warn"); return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      toast("Ukuran foto maks. 5 MB", "warn"); return;
-    }
-    fotoFile = file;
-    fotoMime = file.type;
-
-    // Kompres sebelum preview & upload
-    kompressFoto(file, 1200, 0.82, (b64, mime) => {
-      fotoBase64 = b64;
-      fotoMime   = mime;
-
-      // Tampilkan preview
-      const previewImg = document.getElementById("foto-preview-img");
-      previewImg.src = "data:" + mime + ";base64," + b64;
-      document.getElementById("foto-preview-name").textContent = file.name;
-      document.getElementById("foto-dropzone").style.display = "none";
-      document.getElementById("foto-preview-wrap").classList.add("visible");
-      document.getElementById("btn-upload-foto").disabled = false;
-    });
-  }
-
-  function kompressFoto(file, maxPx, quality, callback) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const img = new Image();
-      img.onload = function() {
-        let w = img.width, h = img.height;
-        if (w > maxPx || h > maxPx) {
-          if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
-          else       { w = Math.round(w * maxPx / h); h = maxPx; }
-        }
-        const canvas = document.createElement("canvas");
-        canvas.width = w; canvas.height = h;
-        canvas.getContext("2d").drawImage(img, 0, 0, w, h);
-        const dataUrl = canvas.toDataURL("image/jpeg", quality);
-        const b64 = dataUrl.split(",")[1];
-        callback(b64, "image/jpeg");
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  async function uploadFoto() {
-    const id = document.getElementById("foto-surat-id").value;
-    if (!fotoBase64 || !id) return;
-
-    const btn = document.getElementById("btn-upload-foto");
-    const lbl = document.getElementById("btn-upload-label");
-    const prog = document.getElementById("foto-progress");
-    const bar  = document.getElementById("foto-progress-bar");
-    const progLbl = document.getElementById("foto-progress-label");
-
-    btn.disabled = true;
-    prog.classList.add("visible");
-    bar.style.width = "20%";
-    progLbl.textContent = "Mengunggah ke server...";
-
-    try {
-      // POST base64 ke Apps Script (doPost)
-      const resp = await fetch(BASE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({
-          action:   "uploadFoto",
-          id:       id,
-          base64:   fotoBase64,
-          mimeType: fotoMime,
-          filename: "bukti_" + id + "_" + Date.now() + ".jpg"
-        })
-      });
-
-      bar.style.width = "80%";
-      progLbl.textContent = "Menyimpan URL...";
-
-      const r = await resp.json();
-      bar.style.width = "100%";
-
-      if (r.ok) {
-        // Update data lokal
-        const idx = semuaData.findIndex(s => s.id === id);
-        if (idx !== -1) semuaData[idx].fotoUrl = r.viewUrl;
-        updateStats(); renderList();
-        tutupModalFoto();
-        toast("Foto bukti berhasil diupload");
-      } else {
-        toast("Gagal upload: " + r.pesan, "err");
-        prog.classList.remove("visible");
-        btn.disabled = false;
-        lbl.textContent = "Coba lagi";
-      }
-    } catch(e) {
-      toast("Tidak dapat terhubung ke server", "err");
-      prog.classList.remove("visible");
-      btn.disabled = false;
-      lbl.textContent = "Coba lagi";
-    }
-  }
-
-  async function hapusFoto(id) {
-    if (!confirm("Hapus foto bukti ini?")) return;
-    const card = document.getElementById("card-" + id);
-    if (card) card.classList.add("dimmed");
-    try {
-      const r = await api({ action: "hapusFoto", id });
-      if (r.ok) {
-        const idx = semuaData.findIndex(s => s.id === id);
-        if (idx !== -1) semuaData[idx].fotoUrl = "";
-        updateStats(); renderList();
-        toast("Foto dihapus");
-      } else {
-        toast("Gagal: " + r.pesan, "err");
-        if (card) card.classList.remove("dimmed");
-      }
-    } catch(e) {
-      toast("Tidak dapat terhubung ke server", "err");
-      if (card) card.classList.remove("dimmed");
-    }
-  }
-
-  function extractDriveId(url) {
-    const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    return m ? m[1] : "";
-  }
-
-  function bukaLightbox(viewUrl) {
-    const id = extractDriveId(viewUrl);
-    if (!id) return;
-    document.getElementById("lightbox-img").src =
-      "https://drive.google.com/thumbnail?id=" + id + "&sz=w1200";
-    document.getElementById("lightbox").classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
-  function tutupLightbox() {
-    document.getElementById("lightbox").classList.remove("open");
-    document.body.style.overflow = "";
-  }
-
-  // =============================================
-  // IMPORT EXCEL / CSV
-  // =============================================
+  // ── IMPORT ──
   let importRows = [];
 
-  function bukaModalImport() {
-    clearFile();
-    document.getElementById("modal-import").classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
-  function tutupModalImport() {
-    document.getElementById("modal-import").classList.remove("open");
-    document.body.style.overflow = "";
-  }
-  function overlayImportClick(e) {
-    if (e.target === document.getElementById("modal-import")) tutupModalImport();
-  }
+  function bukaModalImport() { clearFile(); document.getElementById("modal-import").classList.add("open"); document.body.style.overflow = "hidden"; }
+  function tutupModalImport() { document.getElementById("modal-import").classList.remove("open"); document.body.style.overflow = ""; }
+  function overlayImportClick(e) { if (e.target === document.getElementById("modal-import")) tutupModalImport(); }
 
-  function dzDragOver(e) {
-    e.preventDefault();
-    document.getElementById("dropzone").classList.add("drag-over");
-  }
-  function dzDragLeave() {
-    document.getElementById("dropzone").classList.remove("drag-over");
-  }
-  function dzDrop(e) {
-    e.preventDefault();
-    document.getElementById("dropzone").classList.remove("drag-over");
-    const f = e.dataTransfer.files[0];
-    if (f) handleFile(f);
-  }
+  function dzDragOver(e) { e.preventDefault(); document.getElementById("dropzone").classList.add("drag-over"); }
+  function dzDragLeave() { document.getElementById("dropzone").classList.remove("drag-over"); }
+  function dzDrop(e) { e.preventDefault(); document.getElementById("dropzone").classList.remove("drag-over"); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }
 
   function handleFile(file) {
     if (!file) return;
     const ext = file.name.split(".").pop().toLowerCase();
-    if (!["xlsx","xls","csv"].includes(ext)) {
-      tampilImportError("Format file tidak didukung. Gunakan .xlsx, .xls, atau .csv");
-      return;
-    }
-
+    if (!["xlsx","xls","csv"].includes(ext)) { tampilImportError("Format tidak didukung. Gunakan .xlsx, .xls, atau .csv"); return; }
     const reader = new FileReader();
     reader.onload = function(e) {
       try {
         let rows;
-        if (ext === "csv") {
-          rows = parseCSV(e.target.result);
-        } else {
-          const wb = XLSX.read(e.target.result, { type: "array" });
-          const ws = wb.Sheets[wb.SheetNames[0]];
-          rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
-        }
+        if (ext === "csv") { rows = parseCSV(e.target.result); }
+        else { const wb = XLSX.read(e.target.result, { type: "array" }); const ws = wb.Sheets[wb.SheetNames[0]]; rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" }); }
         prosesRows(rows, file.name);
-      } catch(err) {
-        tampilImportError("Gagal membaca file: " + err.message);
-      }
+      } catch(err) { tampilImportError("Gagal membaca file: " + err.message); }
     };
-
-    if (ext === "csv") {
-      reader.readAsText(file, "UTF-8");
-    } else {
-      reader.readAsArrayBuffer(file);
-    }
+    ext === "csv" ? reader.readAsText(file, "UTF-8") : reader.readAsArrayBuffer(file);
   }
 
   function parseCSV(text) {
-    return text.split(/\r?\n/).map(line =>
-      line.split(";").map(c => c.trim().replace(/^"|"$/g, ""))
-    ).filter(r => r.some(c => c !== ""));
+    return text.split(/\r?\n/).map(line => line.split(";").map(c => c.trim().replace(/^"|"$/g,""))).filter(r => r.some(c => c !== ""));
   }
 
   function prosesRows(raw, filename) {
-    // Deteksi header — lewati baris pertama jika mengandung kata kunci header
-    const headerKata = ["nama", "penerima", "perihal", "keterangan", "name"];
-    const barisAwal = raw[0] ? raw[0].map(c => String(c).toLowerCase()) : [];
-    const adaHeader = headerKata.some(k => barisAwal.some(c => c.includes(k)));
+    const hk = ["nama","penerima","perihal","keterangan","name"];
+    const baris0 = raw[0] ? raw[0].map(c => String(c).toLowerCase()) : [];
+    const adaHeader = hk.some(k => baris0.some(c => c.includes(k)));
     const dataRaw = adaHeader ? raw.slice(1) : raw;
-
     const valid = [], invalid = [];
-
     dataRaw.forEach((row, i) => {
-      const nama   = String(row[0] || "").trim();
+      const nama    = String(row[0] || "").trim();
       const perihal = String(row[1] || "").trim();
-      const ket    = String(row[2] || "").trim();
-
-      if (!nama && !perihal) return; // skip baris kosong
-      if (!nama || !perihal) {
-        invalid.push({ no: i + (adaHeader ? 2 : 1), row, alasan: !nama ? "Nama kosong" : "Perihal kosong" });
-      } else {
-        valid.push({ nama, perihal, ket });
-      }
+      const ket     = String(row[2] || "").trim();
+      if (!nama && !perihal) return;
+      if (!nama || !perihal) invalid.push({ no: i + (adaHeader ? 2 : 1), row, alasan: !nama ? "Nama kosong" : "Perihal kosong" });
+      else valid.push({ nama, perihal, ket });
     });
-
     importRows = valid;
-
-    // Tampilkan preview
     document.getElementById("import-filename").textContent = filename;
-    document.getElementById("import-count").textContent =
-      valid.length + " baris valid" + (invalid.length ? `, ${invalid.length} dilewati` : "");
-
+    document.getElementById("import-count").textContent = valid.length + " baris valid" + (invalid.length ? `, ${invalid.length} dilewati` : "");
     const tbody = document.getElementById("import-tbody");
-    let html = valid.map((r, i) =>
-      `<tr>
-        <td style="color:var(--text-hint)">${i+1}</td>
-        <td title="${escHtml(r.nama)}">${escHtml(r.nama)}</td>
-        <td title="${escHtml(r.perihal)}">${escHtml(r.perihal)}</td>
-        <td title="${escHtml(r.ket)}">${escHtml(r.ket) || '<span style="color:var(--text-hint)">—</span>'}</td>
-      </tr>`
+    tbody.innerHTML = valid.map((r,i) =>
+      `<tr><td style="color:var(--text-hint)">${i+1}</td><td title="${escHtml(r.nama)}">${escHtml(r.nama)}</td><td title="${escHtml(r.perihal)}">${escHtml(r.perihal)}</td><td>${escHtml(r.ket)||'<span style="color:var(--text-hint)">—</span>'}</td></tr>`
+    ).join("") + invalid.map(r =>
+      `<tr class="err-row"><td>${r.no}</td><td colspan="2">${escHtml(String(r.row[0]||""))}</td><td>${r.alasan}</td></tr>`
     ).join("");
-
-    if (invalid.length) {
-      html += invalid.map(r =>
-        `<tr class="err-row">
-          <td>${r.no}</td>
-          <td colspan="2">${escHtml(String(r.row[0]||""))} · ${escHtml(String(r.row[1]||""))}</td>
-          <td>${r.alasan}</td>
-        </tr>`
-      ).join("");
-    }
-
-    tbody.innerHTML = html;
     document.getElementById("import-preview").classList.add("visible");
     document.getElementById("import-error").classList.remove("visible");
     document.getElementById("dropzone").style.display = "none";
-
-    const btnImport = document.getElementById("btn-import");
-    btnImport.disabled = valid.length === 0;
-    document.getElementById("btn-import-label").textContent =
-      `Import ${valid.length} surat`;
+    const btnI = document.getElementById("btn-import");
+    btnI.disabled = valid.length === 0;
+    document.getElementById("btn-import-label").textContent = `Import ${valid.length} surat`;
   }
 
   function clearFile() {
@@ -1752,44 +819,26 @@
     document.getElementById("btn-import-label").textContent = "Import";
   }
 
-  function tampilImportError(msg) {
-    const el = document.getElementById("import-error");
-    el.textContent = msg;
-    el.classList.add("visible");
-  }
+  function tampilImportError(msg) { const el = document.getElementById("import-error"); el.textContent = msg; el.classList.add("visible"); }
 
   async function jalankanImport() {
     if (!importRows.length) return;
-
     const btn = document.getElementById("btn-import");
     const lbl = document.getElementById("btn-import-label");
     const bar = document.getElementById("progress-bar");
-    const barWrap = document.getElementById("progress-wrap");
-
+    document.getElementById("progress-wrap").classList.add("visible");
     btn.disabled = true;
-    barWrap.classList.add("visible");
-
     let sukses = 0, gagal = 0;
-
     for (let i = 0; i < importRows.length; i++) {
       const r = importRows[i];
-      try {
-        const res = await api({ action: "tambah", nama: r.nama, perihal: r.perihal, ket: r.ket });
-        if (res.ok) sukses++; else gagal++;
-      } catch(_) { gagal++; }
-
-      const pct = Math.round(((i + 1) / importRows.length) * 100);
-      bar.style.width = pct + "%";
+      try { const res = await api({ action: "tambah", nama: r.nama, perihal: r.perihal, ket: r.ket }); if (res.ok) sukses++; else gagal++; }
+      catch(_) { gagal++; }
+      bar.style.width = Math.round(((i+1)/importRows.length)*100) + "%";
       lbl.textContent = `Mengimpor ${i+1}/${importRows.length}...`;
     }
-
     tutupModalImport();
     await muat();
-
-    const msg = gagal === 0
-      ? `${sukses} surat berhasil diimport`
-      : `${sukses} berhasil, ${gagal} gagal`;
-    toast(msg, gagal > 0 ? "warn" : undefined);
+    toast(gagal === 0 ? `${sukses} surat berhasil diimport` : `${sukses} berhasil, ${gagal} gagal`, gagal > 0 ? "warn" : undefined);
   }
 
   muat();
