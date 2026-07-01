@@ -852,7 +852,7 @@
   // Registrasi Service Worker (PWA)
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/sw.js")
+      navigator.serviceWorker.register("/manajemen-surat/sw.js", { scope: "/manajemen-surat/" })
         .catch(err => console.warn("SW gagal:", err));
     });
   }
