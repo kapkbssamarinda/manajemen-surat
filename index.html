@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#ffffff">
 <title>Manajemen Surat</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -108,6 +109,23 @@
     color: var(--text-muted);
     font-weight: 400;
   }
+  .btn-import-open {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    color: var(--blue-text);
+    border: 1px solid var(--blue-text);
+    border-radius: var(--radius-sm);
+    padding: 7px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s;
+  }
+  .btn-import-open:active { background: var(--blue-bg); }
   .btn-add {
     display: flex;
     align-items: center;
@@ -480,6 +498,143 @@
   .btn-save:active { background: var(--blue-hover); }
   .btn-save:disabled { opacity: 0.55; cursor: not-allowed; }
 
+  /* ── IMPORT SHEET ── */
+  .import-dropzone {
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius);
+    padding: 28px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .import-dropzone.drag-over {
+    border-color: var(--blue);
+    background: var(--blue-bg);
+  }
+  .import-dropzone input[type=file] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .import-dropzone i {
+    font-size: 32px; color: var(--text-hint);
+    display: block; margin-bottom: 8px;
+  }
+  .import-dropzone p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .import-dropzone small { font-size: 11px; color: var(--text-hint); }
+
+  .import-preview-wrap {
+    display: none;
+    margin-bottom: 12px;
+  }
+  .import-preview-wrap.visible { display: block; }
+
+  .import-file-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: var(--blue-bg);
+    border-radius: var(--radius-sm);
+    margin-bottom: 10px;
+  }
+  .import-file-info i { color: var(--blue-text); font-size: 16px; }
+  .import-file-name { font-size: 12px; font-weight: 500; color: var(--blue-text); flex: 1; }
+  .import-file-count { font-size: 11px; color: var(--blue-text); opacity: 0.8; }
+  .btn-clear-file {
+    border: none; background: none; cursor: pointer;
+    color: var(--blue-text); font-size: 14px; padding: 2px;
+    display: flex; align-items: center;
+  }
+
+  .import-table-wrap {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .import-table {
+    width: 100%; border-collapse: collapse; font-size: 12px;
+  }
+  .import-table thead th {
+    background: var(--surface-sub);
+    padding: 7px 10px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 11px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+  }
+  .import-table tbody td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .import-table tbody tr:last-child td { border-bottom: none; }
+  .import-table tbody tr.err-row td { background: var(--red-bg); color: var(--red-text); }
+
+  .import-error {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: var(--red-bg);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    color: var(--red-text);
+    display: none;
+  }
+  .import-error.visible { display: block; }
+
+  .import-format-hint {
+    font-size: 11px;
+    color: var(--text-hint);
+    text-align: center;
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  .btn-import {
+    flex: 2;
+    padding: 11px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--blue);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .btn-import:active { background: var(--blue-hover); }
+  .btn-import:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  .progress-bar-wrap {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+    display: none;
+  }
+  .progress-bar-wrap.visible { display: block; }
+  .progress-bar {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.2s;
+  }
+
   /* ── TOAST ── */
   .toast {
     position: fixed;
@@ -519,10 +674,16 @@
         <p class="header-sub" id="subtitle">Memuat data...</p>
       </div>
     </div>
-    <button class="btn-add" onclick="bukaModal()" aria-label="Tambah surat baru">
-      <i class="ti ti-plus" aria-hidden="true"></i>
-      Tambah
-    </button>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn-import-open" onclick="bukaModalImport()" aria-label="Import dari Excel">
+          <i class="ti ti-file-import" aria-hidden="true"></i>
+          Import
+        </button>
+        <button class="btn-add" onclick="bukaModal()" aria-label="Tambah surat baru">
+          <i class="ti ti-plus" aria-hidden="true"></i>
+          Tambah
+        </button>
+      </div>
   </div>
 
   <!-- Stats -->
@@ -594,6 +755,72 @@
   </div>
 </div>
 
+<!-- MODAL IMPORT -->
+<div class="overlay" id="modal-import" role="dialog" aria-modal="true" aria-label="Import dari Excel" onclick="overlayImportClick(event)">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">Import dari Excel / CSV</span>
+      <button class="btn-close" onclick="tutupModalImport()" aria-label="Tutup">
+        <i class="ti ti-x" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="sheet-body">
+
+      <!-- DROP ZONE -->
+      <div class="import-dropzone" id="dropzone"
+           ondragover="dzDragOver(event)" ondragleave="dzDragLeave(event)" ondrop="dzDrop(event)">
+        <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFile(this.files[0])">
+        <i class="ti ti-file-spreadsheet" aria-hidden="true"></i>
+        <p>Ketuk untuk pilih file<br>atau seret file ke sini</p>
+        <small>Mendukung .xlsx, .xls, .csv</small>
+      </div>
+
+      <!-- PREVIEW -->
+      <div class="import-preview-wrap" id="import-preview">
+        <div class="import-file-info">
+          <i class="ti ti-file-check" aria-hidden="true"></i>
+          <span class="import-file-name" id="import-filename">—</span>
+          <span class="import-file-count" id="import-count"></span>
+          <button class="btn-clear-file" onclick="clearFile()" aria-label="Hapus file">
+            <i class="ti ti-x" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="import-table-wrap">
+          <table class="import-table" id="import-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nama Penerima</th>
+                <th>Perihal</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody id="import-tbody"></tbody>
+          </table>
+        </div>
+        <div class="import-error" id="import-error"></div>
+        <div class="progress-bar-wrap" id="progress-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="import-format-hint">
+        Format kolom: <strong>Nama Penerima</strong> · <strong>Perihal</strong> · <strong>Keterangan</strong><br>
+        Baris pertama adalah header (akan dilewati otomatis)
+      </div>
+    </div>
+
+    <div class="sheet-actions">
+      <button class="btn-cancel" onclick="tutupModalImport()">Batal</button>
+      <button class="btn-import" id="btn-import" onclick="jalankanImport()" disabled>
+        <i class="ti ti-upload" aria-hidden="true"></i>
+        <span id="btn-import-label">Import</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast" role="status" aria-live="polite">
   <i class="ti ti-check" id="toast-icon" aria-hidden="true"></i>
@@ -601,7 +828,7 @@
 </div>
 
 <script>
-  const BASE_URL = "https://script.google.com/macros/s/AKfycbxn32U81yG0ckhSvXXY_AjAlp0u7yT5CNtnfDyQcU3YYfirEx69Dseuor7aTHc_aQZy8g/exec";
+  const BASE_URL = "GANTI_DENGAN_URL_EXEC_KAMU";
 
   let semuaData = [];
   let filterAktif = "semua";
@@ -825,6 +1052,188 @@
   }
   function escAttr(s) {
     return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;");
+  }
+
+  // =============================================
+  // IMPORT EXCEL / CSV
+  // =============================================
+  let importRows = [];
+
+  function bukaModalImport() {
+    clearFile();
+    document.getElementById("modal-import").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function tutupModalImport() {
+    document.getElementById("modal-import").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  function overlayImportClick(e) {
+    if (e.target === document.getElementById("modal-import")) tutupModalImport();
+  }
+
+  function dzDragOver(e) {
+    e.preventDefault();
+    document.getElementById("dropzone").classList.add("drag-over");
+  }
+  function dzDragLeave() {
+    document.getElementById("dropzone").classList.remove("drag-over");
+  }
+  function dzDrop(e) {
+    e.preventDefault();
+    document.getElementById("dropzone").classList.remove("drag-over");
+    const f = e.dataTransfer.files[0];
+    if (f) handleFile(f);
+  }
+
+  function handleFile(file) {
+    if (!file) return;
+    const ext = file.name.split(".").pop().toLowerCase();
+    if (!["xlsx","xls","csv"].includes(ext)) {
+      tampilImportError("Format file tidak didukung. Gunakan .xlsx, .xls, atau .csv");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        let rows;
+        if (ext === "csv") {
+          rows = parseCSV(e.target.result);
+        } else {
+          const wb = XLSX.read(e.target.result, { type: "array" });
+          const ws = wb.Sheets[wb.SheetNames[0]];
+          rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
+        }
+        prosesRows(rows, file.name);
+      } catch(err) {
+        tampilImportError("Gagal membaca file: " + err.message);
+      }
+    };
+
+    if (ext === "csv") {
+      reader.readAsText(file, "UTF-8");
+    } else {
+      reader.readAsArrayBuffer(file);
+    }
+  }
+
+  function parseCSV(text) {
+    return text.split(/\r?\n/).map(line =>
+      line.split(";").map(c => c.trim().replace(/^"|"$/g, ""))
+    ).filter(r => r.some(c => c !== ""));
+  }
+
+  function prosesRows(raw, filename) {
+    // Deteksi header — lewati baris pertama jika mengandung kata kunci header
+    const headerKata = ["nama", "penerima", "perihal", "keterangan", "name"];
+    const barisAwal = raw[0] ? raw[0].map(c => String(c).toLowerCase()) : [];
+    const adaHeader = headerKata.some(k => barisAwal.some(c => c.includes(k)));
+    const dataRaw = adaHeader ? raw.slice(1) : raw;
+
+    const valid = [], invalid = [];
+
+    dataRaw.forEach((row, i) => {
+      const nama   = String(row[0] || "").trim();
+      const perihal = String(row[1] || "").trim();
+      const ket    = String(row[2] || "").trim();
+
+      if (!nama && !perihal) return; // skip baris kosong
+      if (!nama || !perihal) {
+        invalid.push({ no: i + (adaHeader ? 2 : 1), row, alasan: !nama ? "Nama kosong" : "Perihal kosong" });
+      } else {
+        valid.push({ nama, perihal, ket });
+      }
+    });
+
+    importRows = valid;
+
+    // Tampilkan preview
+    document.getElementById("import-filename").textContent = filename;
+    document.getElementById("import-count").textContent =
+      valid.length + " baris valid" + (invalid.length ? `, ${invalid.length} dilewati` : "");
+
+    const tbody = document.getElementById("import-tbody");
+    let html = valid.map((r, i) =>
+      `<tr>
+        <td style="color:var(--text-hint)">${i+1}</td>
+        <td title="${escHtml(r.nama)}">${escHtml(r.nama)}</td>
+        <td title="${escHtml(r.perihal)}">${escHtml(r.perihal)}</td>
+        <td title="${escHtml(r.ket)}">${escHtml(r.ket) || '<span style="color:var(--text-hint)">—</span>'}</td>
+      </tr>`
+    ).join("");
+
+    if (invalid.length) {
+      html += invalid.map(r =>
+        `<tr class="err-row">
+          <td>${r.no}</td>
+          <td colspan="2">${escHtml(String(r.row[0]||""))} · ${escHtml(String(r.row[1]||""))}</td>
+          <td>${r.alasan}</td>
+        </tr>`
+      ).join("");
+    }
+
+    tbody.innerHTML = html;
+    document.getElementById("import-preview").classList.add("visible");
+    document.getElementById("import-error").classList.remove("visible");
+    document.getElementById("dropzone").style.display = "none";
+
+    const btnImport = document.getElementById("btn-import");
+    btnImport.disabled = valid.length === 0;
+    document.getElementById("btn-import-label").textContent =
+      `Import ${valid.length} surat`;
+  }
+
+  function clearFile() {
+    importRows = [];
+    document.getElementById("file-input").value = "";
+    document.getElementById("import-preview").classList.remove("visible");
+    document.getElementById("import-error").classList.remove("visible");
+    document.getElementById("dropzone").style.display = "";
+    document.getElementById("progress-wrap").classList.remove("visible");
+    document.getElementById("progress-bar").style.width = "0%";
+    document.getElementById("btn-import").disabled = true;
+    document.getElementById("btn-import-label").textContent = "Import";
+  }
+
+  function tampilImportError(msg) {
+    const el = document.getElementById("import-error");
+    el.textContent = msg;
+    el.classList.add("visible");
+  }
+
+  async function jalankanImport() {
+    if (!importRows.length) return;
+
+    const btn = document.getElementById("btn-import");
+    const lbl = document.getElementById("btn-import-label");
+    const bar = document.getElementById("progress-bar");
+    const barWrap = document.getElementById("progress-wrap");
+
+    btn.disabled = true;
+    barWrap.classList.add("visible");
+
+    let sukses = 0, gagal = 0;
+
+    for (let i = 0; i < importRows.length; i++) {
+      const r = importRows[i];
+      try {
+        const res = await api({ action: "tambah", nama: r.nama, perihal: r.perihal, ket: r.ket });
+        if (res.ok) sukses++; else gagal++;
+      } catch(_) { gagal++; }
+
+      const pct = Math.round(((i + 1) / importRows.length) * 100);
+      bar.style.width = pct + "%";
+      lbl.textContent = `Mengimpor ${i+1}/${importRows.length}...`;
+    }
+
+    tutupModalImport();
+    await muat();
+
+    const msg = gagal === 0
+      ? `${sukses} surat berhasil diimport`
+      : `${sukses} berhasil, ${gagal} gagal`;
+    toast(msg, gagal > 0 ? "warn" : undefined);
   }
 
   muat();
