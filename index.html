@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#ffffff">
+<title>Manajemen Surat</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:        #1a73e8;
+    --blue-hover:  #1557b0;
+    --blue-bg:     #e8f0fe;
+    --blue-text:   #1557b0;
+    --green-bg:    #e6f4ea;
+    --green-text:  #137333;
+    --green-border:#a8d5b5;
+    --red-bg:      #fce8e6;
+    --red-text:    #c5221f;
+    --red-border:  #f4b8b5;
+    --surface:     #ffffff;
+    --surface-sub: #f8f9fa;
+    --border:      #e0e0e0;
+    --border-strong: #c4c4c4;
+    --text:        #1a1a1a;
+    --text-muted:  #6b7280;
+    --text-hint:   #9ca3af;
+    --radius-sm:   6px;
+    --radius:      10px;
+    --radius-lg:   16px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --blue:        #4d90fe;
+      --blue-hover:  #7aaeff;
+      --blue-bg:     #1a2744;
+      --blue-text:   #8ab4f8;
+      --green-bg:    #0d2818;
+      --green-text:  #81c995;
+      --green-border:#2d6a3f;
+      --red-bg:      #2c1210;
+      --red-text:    #f28b82;
+      --red-border:  #6e2b28;
+      --surface:     #1e1e1e;
+      --surface-sub: #141414;
+      --border:      #2e2e2e;
+      --border-strong:#444444;
+      --text:        #e8e8e8;
+      --text-muted:  #9ca3af;
+      --text-hint:   #6b7280;
+    }
+  }
+
+  html { height: 100%; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--surface-sub);
+    color: var(--text);
+    font-size: 14px;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .header-icon {
+    width: 32px; height: 32px;
+    background: var(--blue-bg);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue);
+    font-size: 16px;
+  }
+  .header h1 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.2px;
+  }
+  .header-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .btn-add {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s;
+  }
+  .btn-add:active { background: var(--blue-hover); }
+
+  /* ── STATS ── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 12px 16px 0;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    text-align: center;
+  }
+  .stat-val {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .stat-val.blue  { color: var(--blue); }
+  .stat-val.green { color: var(--green-text); }
+  .stat-val.red   { color: var(--red-text); }
+  .stat-lbl {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    padding: 10px 16px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .search-box {
+    position: relative;
+  }
+  .search-box i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-hint);
+    font-size: 16px;
+    pointer-events: none;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 9px 12px 9px 34px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .search-box input::placeholder { color: var(--text-hint); }
+  .search-box input:focus { border-color: var(--blue); }
+
+  .filters {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .filter-pill {
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.15s;
+  }
+  .filter-pill.active {
+    background: var(--blue-bg);
+    border-color: transparent;
+    color: var(--blue-text);
+  }
+
+  /* ── LIST ── */
+  .list-wrap {
+    padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-hint);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 8px 0 6px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .card-inner { padding: 12px 14px; }
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .card-nama {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+    flex: 1;
+  }
+  .badge {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 20px;
+    line-height: 1.4;
+  }
+  .badge.sudah {
+    background: var(--green-bg);
+    color: var(--green-text);
+    border: 1px solid var(--green-border);
+  }
+  .badge.belum {
+    background: var(--red-bg);
+    color: var(--red-text);
+    border: 1px solid var(--red-border);
+  }
+
+  .card-perihal {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .card-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--text-hint);
+  }
+  .card-meta-item i { font-size: 13px; }
+  .card-ket {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-hint);
+    padding: 6px 8px;
+    background: var(--surface-sub);
+    border-radius: var(--radius-sm);
+    line-height: 1.4;
+  }
+
+  .card-actions {
+    border-top: 1px solid var(--border);
+    display: flex;
+  }
+  .card-btn {
+    flex: 1;
+    padding: 9px 8px;
+    border: none;
+    background: none;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.1s, color 0.1s;
+  }
+  .card-btn:active { background: var(--surface-sub); }
+  .card-btn i { font-size: 14px; }
+  .card-btn.btn-kirim { color: var(--blue-text); }
+  .card-btn.btn-kirim:active { background: var(--blue-bg); }
+  .card-btn.btn-unkirim { color: var(--text-muted); }
+  .card-btn.btn-hapus { color: var(--red-text); }
+  .card-btn.btn-hapus:active { background: var(--red-bg); }
+  .card-divider { width: 1px; background: var(--border); flex-shrink: 0; }
+
+  .card.dimmed { opacity: 0.45; pointer-events: none; }
+
+  /* ── EMPTY / LOADING ── */
+  .state-box {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--text-hint);
+  }
+  .state-box i {
+    font-size: 40px;
+    margin-bottom: 12px;
+    display: block;
+    opacity: 0.5;
+  }
+  .state-box p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .spinner {
+    width: 28px; height: 28px;
+    border: 2.5px solid var(--border);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── MODAL ── */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    align-items: flex-end;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  .overlay.open { display: flex; }
+
+  .sheet {
+    background: var(--surface);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 0 0 calc(20px + env(safe-area-inset-bottom));
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+    animation: slideUp 0.2s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  .sheet-handle {
+    width: 36px; height: 4px;
+    background: var(--border-strong);
+    border-radius: 2px;
+    margin: 10px auto 16px;
+  }
+  .sheet-header {
+    padding: 0 16px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sheet-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .btn-close {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: var(--surface-sub);
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .sheet-body { padding: 16px; }
+
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+  .field input, .field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    -webkit-appearance: none;
+    transition: border-color 0.15s;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: var(--text-hint); }
+  .field input:focus, .field textarea:focus { border-color: var(--blue); }
+  .field textarea { resize: none; height: 70px; line-height: 1.5; }
+  .field-req { color: var(--red-text); margin-left: 2px; }
+
+  .sheet-actions {
+    padding: 0 16px;
+    display: flex;
+    gap: 10px;
+  }
+  .btn-cancel {
+    flex: 1;
+    padding: 11px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-muted);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-save {
+    flex: 2;
+    padding: 11px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--blue);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s;
+  }
+  .btn-save:active { background: var(--blue-hover); }
+  .btn-save:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--text);
+    color: var(--surface);
+    padding: 9px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 400;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast i { font-size: 14px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-top">
+    <div class="header-brand">
+      <div class="header-icon" aria-hidden="true">
+        <i class="ti ti-mail"></i>
+      </div>
+      <div>
+        <h1>Manajemen Surat</h1>
+        <p class="header-sub" id="subtitle">Memuat data...</p>
+      </div>
+    </div>
+    <button class="btn-add" onclick="bukaModal()" aria-label="Tambah surat baru">
+      <i class="ti ti-plus" aria-hidden="true"></i>
+      Tambah
+    </button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-val blue" id="stat-total">—</div>
+      <div class="stat-lbl">Total</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val green" id="stat-sudah">—</div>
+      <div class="stat-lbl">Terkirim</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val red" id="stat-belum">—</div>
+      <div class="stat-lbl">Belum kirim</div>
+    </div>
+  </div>
+</header>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="search-box">
+    <i class="ti ti-search" aria-hidden="true"></i>
+    <input type="search" id="search" placeholder="Cari penerima atau perihal..." oninput="renderList()" autocomplete="off">
+  </div>
+  <div class="filters" role="group" aria-label="Filter status">
+    <button class="filter-pill active" onclick="setFilter('semua', this)">Semua</button>
+    <button class="filter-pill" onclick="setFilter('belum', this)">Belum kirim</button>
+    <button class="filter-pill" onclick="setFilter('sudah', this)">Sudah terkirim</button>
+  </div>
+</div>
+
+<!-- LIST -->
+<main class="list-wrap" id="list" aria-live="polite">
+  <div class="state-box">
+    <div class="spinner"></div>
+    <p>Memuat data surat...</p>
+  </div>
+</main>
+
+<!-- MODAL TAMBAH -->
+<div class="overlay" id="modal" role="dialog" aria-modal="true" aria-label="Tambah surat baru" onclick="overlayClick(event)">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">Surat baru</span>
+      <button class="btn-close" onclick="tutupModal()" aria-label="Tutup">
+        <i class="ti ti-x" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="field">
+        <label>Nama penerima<span class="field-req">*</span></label>
+        <input type="text" id="f-nama" placeholder="PT. Contoh Indonesia" autocomplete="off">
+      </div>
+      <div class="field">
+        <label>Perihal<span class="field-req">*</span></label>
+        <input type="text" id="f-perihal" placeholder="Undangan rapat koordinasi">
+      </div>
+      <div class="field">
+        <label>Keterangan <span style="color:var(--text-hint);font-weight:400">(opsional)</span></label>
+        <textarea id="f-ket" placeholder="Catatan tambahan..."></textarea>
+      </div>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn-cancel" onclick="tutupModal()">Batal</button>
+      <button class="btn-save" id="btn-simpan" onclick="simpanSurat()">Simpan surat</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <i class="ti ti-check" id="toast-icon" aria-hidden="true"></i>
+  <span id="toast-msg"></span>
+</div>
+
+<script>
+  const BASE_URL = "https://script.google.com/macros/s/AKfycbxn32U81yG0ckhSvXXY_AjAlp0u7yT5CNtnfDyQcU3YYfirEx69Dseuor7aTHc_aQZy8g/exec";
+
+  let semuaData = [];
+  let filterAktif = "semua";
+
+  async function api(params) {
+    const url = BASE_URL + "?" + new URLSearchParams(params).toString();
+    const resp = await fetch(url, { redirect: "follow" });
+    return resp.json();
+  }
+
+  async function muat() {
+    try {
+      const r = await api({ action: "getAll" });
+      if (r.ok) {
+        semuaData = r.data;
+        updateStats();
+        renderList();
+      } else {
+        tampilError("Gagal memuat data");
+      }
+    } catch(e) {
+      tampilError("Tidak dapat terhubung ke server");
+    }
+  }
+
+  function updateStats() {
+    const sudah = semuaData.filter(s => s.status === "Sudah Dikirim").length;
+    const belum = semuaData.filter(s => s.status === "Belum Dikirim").length;
+    document.getElementById("stat-total").textContent = semuaData.length;
+    document.getElementById("stat-sudah").textContent = sudah;
+    document.getElementById("stat-belum").textContent = belum;
+    document.getElementById("subtitle").textContent =
+      semuaData.length === 0 ? "Belum ada surat" :
+      semuaData.length + " surat tercatat";
+  }
+
+  function renderList() {
+    const q = document.getElementById("search").value.toLowerCase();
+    let data = semuaData;
+    if (filterAktif === "sudah") data = data.filter(s => s.status === "Sudah Dikirim");
+    if (filterAktif === "belum") data = data.filter(s => s.status === "Belum Dikirim");
+    if (q) data = data.filter(s =>
+      s.namaPenerima.toLowerCase().includes(q) ||
+      (s.perihal && s.perihal.toLowerCase().includes(q))
+    );
+
+    const el = document.getElementById("list");
+
+    if (data.length === 0) {
+      const msg = q ? "Tidak ada hasil untuk pencarian ini"
+        : filterAktif !== "semua" ? "Tidak ada surat dengan status ini"
+        : "Belum ada surat. Ketuk Tambah untuk mulai.";
+      el.innerHTML = `<div class="state-box"><i class="ti ti-inbox" aria-hidden="true"></i><p>${msg}</p></div>`;
+      return;
+    }
+
+    const belumList = data.filter(s => s.status === "Belum Dikirim");
+    const sudahList = data.filter(s => s.status === "Sudah Dikirim");
+
+    let html = "";
+
+    if (belumList.length && filterAktif === "semua") {
+      html += `<div class="section-label">Belum dikirim · ${belumList.length}</div>`;
+      html += belumList.map(kartu).join("");
+    } else if (filterAktif === "belum") {
+      html += belumList.map(kartu).join("");
+    }
+
+    if (sudahList.length && filterAktif === "semua") {
+      html += `<div class="section-label" style="margin-top:8px">Sudah terkirim · ${sudahList.length}</div>`;
+      html += sudahList.map(kartu).join("");
+    } else if (filterAktif === "sudah") {
+      html += sudahList.map(kartu).join("");
+    }
+
+    if (q) { html = data.map(kartu).join(""); }
+
+    el.innerHTML = html;
+  }
+
+  function kartu(s) {
+    const cls = s.status === "Sudah Dikirim" ? "sudah" : "belum";
+    const tgl = s.tanggal
+      ? `<div class="card-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i>${s.tanggal}</div>`
+      : "";
+    const ket = s.keterangan
+      ? `<div class="card-ket">${escHtml(s.keterangan)}</div>`
+      : "";
+    const aksiIcon  = cls === "sudah" ? "ti-circle-x"    : "ti-circle-check";
+    const aksiLabel = cls === "sudah" ? "Tandai belum"   : "Tandai terkirim";
+    const aksiCls   = cls === "sudah" ? "btn-unkirim"    : "btn-kirim";
+
+    return `<article class="card" id="card-${s.id}">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="card-nama">${escHtml(s.namaPenerima)}</div>
+          <span class="badge ${cls}">${s.status === "Sudah Dikirim" ? "Terkirim" : "Belum kirim"}</span>
+        </div>
+        ${s.perihal ? `<div class="card-perihal">${escHtml(s.perihal)}</div>` : ""}
+        <div class="card-meta">${tgl}</div>
+        ${ket}
+      </div>
+      <div class="card-actions">
+        <button class="card-btn ${aksiCls}" onclick="toggleStatus('${s.id}')">
+          <i class="ti ${aksiIcon}" aria-hidden="true"></i>${aksiLabel}
+        </button>
+        <div class="card-divider"></div>
+        <button class="card-btn btn-hapus" onclick="hapus('${s.id}', '${escAttr(s.namaPenerima)}')">
+          <i class="ti ti-trash" aria-hidden="true"></i>Hapus
+        </button>
+      </div>
+    </article>`;
+  }
+
+  async function simpanSurat() {
+    const nama   = document.getElementById("f-nama").value.trim();
+    const perihal = document.getElementById("f-perihal").value.trim();
+    const ket    = document.getElementById("f-ket").value.trim();
+
+    if (!nama)   { toast("Nama penerima wajib diisi", "warn"); document.getElementById("f-nama").focus(); return; }
+    if (!perihal){ toast("Perihal wajib diisi", "warn"); document.getElementById("f-perihal").focus(); return; }
+
+    const btn = document.getElementById("btn-simpan");
+    btn.disabled = true; btn.textContent = "Menyimpan...";
+
+    try {
+      const r = await api({ action: "tambah", nama, perihal, ket });
+      if (r.ok) {
+        tutupModal();
+        toast("Surat berhasil ditambahkan");
+        await muat();
+      } else {
+        toast("Gagal: " + r.pesan, "err");
+      }
+    } catch(e) {
+      toast("Tidak dapat terhubung ke server", "err");
+    } finally {
+      btn.disabled = false; btn.textContent = "Simpan surat";
+    }
+  }
+
+  async function toggleStatus(id) {
+    const el = document.getElementById("card-" + id);
+    if (el) el.classList.add("dimmed");
+    try {
+      const r = await api({ action: "ubahStatus", id });
+      if (r.ok) {
+        const idx = semuaData.findIndex(s => s.id === id);
+        if (idx !== -1) semuaData[idx].status = r.statusBaru;
+        updateStats(); renderList();
+        toast(r.statusBaru === "Sudah Dikirim" ? "Ditandai terkirim" : "Ditandai belum kirim");
+      } else {
+        toast("Gagal: " + r.pesan, "err");
+        if (el) el.classList.remove("dimmed");
+      }
+    } catch(e) {
+      toast("Tidak dapat terhubung ke server", "err");
+      if (el) el.classList.remove("dimmed");
+    }
+  }
+
+  async function hapus(id, nama) {
+    if (!confirm(`Hapus surat untuk "${nama}"?`)) return;
+    try {
+      const r = await api({ action: "hapus", id });
+      if (r.ok) {
+        semuaData = semuaData.filter(s => s.id !== id);
+        updateStats(); renderList();
+        toast("Surat dihapus");
+      } else {
+        toast("Gagal: " + r.pesan, "err");
+      }
+    } catch(e) {
+      toast("Tidak dapat terhubung ke server", "err");
+    }
+  }
+
+  function setFilter(f, btn) {
+    filterAktif = f;
+    document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderList();
+  }
+
+  function bukaModal() {
+    ["f-nama","f-perihal","f-ket"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("modal").classList.add("open");
+    document.body.style.overflow = "hidden";
+    setTimeout(() => document.getElementById("f-nama").focus(), 250);
+  }
+  function tutupModal() {
+    document.getElementById("modal").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  function overlayClick(e) {
+    if (e.target === document.getElementById("modal")) tutupModal();
+  }
+
+  let _toastTimer;
+  function toast(msg, type) {
+    const el  = document.getElementById("toast");
+    const ico = document.getElementById("toast-icon");
+    const txt = document.getElementById("toast-msg");
+    txt.textContent = msg;
+    ico.className = type === "err"  ? "ti ti-alert-circle"
+                  : type === "warn" ? "ti ti-alert-triangle"
+                  : "ti ti-check";
+    el.classList.add("show");
+    clearTimeout(_toastTimer);
+    _toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+  }
+
+  function tampilError(msg) {
+    document.getElementById("list").innerHTML =
+      `<div class="state-box"><i class="ti ti-wifi-off" aria-hidden="true"></i><p>${msg}</p></div>`;
+    document.getElementById("subtitle").textContent = "Terjadi kesalahan";
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function escAttr(s) {
+    return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;");
+  }
+
+  muat();
+</script>
+</body>
+</html>
