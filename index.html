@@ -5,7 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#1a73e8">
+<meta name="application-name" content="Manajemen Surat">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Surat">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>Manajemen Surat</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -513,7 +519,7 @@
 </div>
 
 <script>
-  const BASE_URL = "https://script.google.com/macros/s/AKfycbxn32U81yG0ckhSvXXY_AjAlp0u7yT5CNtnfDyQcU3YYfirEx69Dseuor7aTHc_aQZy8g/exec";
+  const BASE_URL = "GANTI_DENGAN_URL_EXEC_KAMU";
 
   let semuaData  = [];
   let filterAktif = "semua";
@@ -842,6 +848,14 @@
   }
 
   muat();
+
+  // Registrasi Service Worker (PWA)
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js")
+        .catch(err => console.warn("SW gagal:", err));
+    });
+  }
 </script>
 </body>
 </html>
