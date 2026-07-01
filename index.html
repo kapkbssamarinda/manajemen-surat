@@ -498,6 +498,40 @@
   .btn-save:active { background: var(--blue-hover); }
   .btn-save:disabled { opacity: 0.55; cursor: not-allowed; }
 
+  .card-btn.btn-edit { color: var(--text-muted); }
+  .card-btn.btn-edit:active { background: var(--surface-sub); }
+
+  /* ── STATUS TOGGLE di modal edit ── */
+  .status-toggle {
+    display: flex;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .status-opt {
+    flex: 1;
+    padding: 10px 8px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .status-opt.active-belum {
+    border-color: var(--red-text);
+    background: var(--red-bg);
+    color: var(--red-text);
+  }
+  .status-opt.active-sudah {
+    border-color: var(--green-text);
+    background: var(--green-bg);
+    color: var(--green-text);
+  }
+
   /* ── IMPORT SHEET ── */
   .import-dropzone {
     border: 2px dashed var(--border-strong);
@@ -755,6 +789,49 @@
   </div>
 </div>
 
+<!-- MODAL EDIT -->
+<div class="overlay" id="modal-edit" role="dialog" aria-modal="true" aria-label="Edit surat" onclick="overlayEditClick(event)">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">Edit surat</span>
+      <button class="btn-close" onclick="tutupEdit()" aria-label="Tutup">
+        <i class="ti ti-x" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <input type="hidden" id="e-id">
+      <div class="field">
+        <label>Nama penerima<span class="field-req">*</span></label>
+        <input type="text" id="e-nama" placeholder="PT. Contoh Indonesia" autocomplete="off">
+      </div>
+      <div class="field">
+        <label>Perihal<span class="field-req">*</span></label>
+        <input type="text" id="e-perihal" placeholder="Undangan rapat koordinasi">
+      </div>
+      <div class="field">
+        <label>Keterangan <span style="color:var(--text-hint);font-weight:400">(opsional)</span></label>
+        <textarea id="e-ket" placeholder="Catatan tambahan..."></textarea>
+      </div>
+      <div class="field">
+        <label>Status pengiriman</label>
+        <div class="status-toggle">
+          <button class="status-opt" id="e-status-belum" onclick="setStatusEdit('Belum Dikirim')">
+            Belum dikirim
+          </button>
+          <button class="status-opt" id="e-status-sudah" onclick="setStatusEdit('Sudah Dikirim')">
+            Sudah terkirim
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn-cancel" onclick="tutupEdit()">Batal</button>
+      <button class="btn-save" id="btn-edit-simpan" onclick="simpanEdit()">Simpan perubahan</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL IMPORT -->
 <div class="overlay" id="modal-import" role="dialog" aria-modal="true" aria-label="Import dari Excel" onclick="overlayImportClick(event)">
   <div class="sheet">
@@ -932,6 +1009,10 @@
         ${ket}
       </div>
       <div class="card-actions">
+        <button class="card-btn btn-edit" onclick="bukaEdit('${s.id}')">
+          <i class="ti ti-pencil" aria-hidden="true"></i>Edit
+        </button>
+        <div class="card-divider"></div>
         <button class="card-btn ${aksiCls}" onclick="toggleStatus('${s.id}')">
           <i class="ti ${aksiIcon}" aria-hidden="true"></i>${aksiLabel}
         </button>
@@ -1003,6 +1084,77 @@
       }
     } catch(e) {
       toast("Tidak dapat terhubung ke server", "err");
+    }
+  }
+
+  // =============================================
+  // EDIT SURAT
+  // =============================================
+  let editStatusSaat = "Belum Dikirim";
+
+  function bukaEdit(id) {
+    const s = semuaData.find(x => x.id === id);
+    if (!s) return;
+    document.getElementById("e-id").value = s.id;
+    document.getElementById("e-nama").value = s.namaPenerima;
+    document.getElementById("e-perihal").value = s.perihal;
+    document.getElementById("e-ket").value = s.keterangan || "";
+    setStatusEdit(s.status);
+    document.getElementById("modal-edit").classList.add("open");
+    document.body.style.overflow = "hidden";
+    setTimeout(() => document.getElementById("e-nama").focus(), 250);
+  }
+
+  function tutupEdit() {
+    document.getElementById("modal-edit").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  function overlayEditClick(e) {
+    if (e.target === document.getElementById("modal-edit")) tutupEdit();
+  }
+
+  function setStatusEdit(val) {
+    editStatusSaat = val;
+    document.getElementById("e-status-belum").className =
+      "status-opt" + (val === "Belum Dikirim" ? " active-belum" : "");
+    document.getElementById("e-status-sudah").className =
+      "status-opt" + (val === "Sudah Dikirim" ? " active-sudah" : "");
+  }
+
+  async function simpanEdit() {
+    const id      = document.getElementById("e-id").value;
+    const nama    = document.getElementById("e-nama").value.trim();
+    const perihal = document.getElementById("e-perihal").value.trim();
+    const ket     = document.getElementById("e-ket").value.trim();
+    const status  = editStatusSaat;
+
+    if (!nama)    { toast("Nama penerima wajib diisi", "warn"); document.getElementById("e-nama").focus(); return; }
+    if (!perihal) { toast("Perihal wajib diisi", "warn"); document.getElementById("e-perihal").focus(); return; }
+
+    const btn = document.getElementById("btn-edit-simpan");
+    btn.disabled = true; btn.textContent = "Menyimpan...";
+
+    try {
+      const r = await api({ action: "edit", id, nama, perihal, ket, status });
+      if (r.ok) {
+        tutupEdit();
+        const idx = semuaData.findIndex(s => s.id === id);
+        if (idx !== -1) {
+          semuaData[idx].namaPenerima = nama;
+          semuaData[idx].perihal = perihal;
+          semuaData[idx].keterangan = ket;
+          semuaData[idx].status = status;
+        }
+        updateStats(); renderList();
+        toast("Surat berhasil diperbarui");
+      } else {
+        toast("Gagal: " + r.pesan, "err");
+      }
+    } catch(e) {
+      toast("Tidak dapat terhubung ke server", "err");
+    } finally {
+      btn.disabled = false; btn.textContent = "Simpan perubahan";
     }
   }
 
