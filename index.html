@@ -501,6 +501,134 @@
   .card-btn.btn-edit { color: var(--text-muted); }
   .card-btn.btn-edit:active { background: var(--surface-sub); }
 
+  .card-foto {
+    margin-top: 8px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    position: relative;
+  }
+  .card-foto img {
+    width: 100%;
+    max-height: 160px;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  .card-foto-placeholder {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-hint);
+    padding: 6px 0;
+  }
+  .card-foto-placeholder i { font-size: 14px; }
+  .btn-foto-hapus {
+    position: absolute;
+    top: 6px; right: 6px;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    border: none;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ── MODAL FOTO ── */
+  .foto-dropzone {
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius);
+    padding: 24px 16px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.15s, background 0.15s;
+    margin-bottom: 12px;
+  }
+  .foto-dropzone.drag-over {
+    border-color: var(--blue);
+    background: var(--blue-bg);
+  }
+  .foto-dropzone input[type=file] {
+    position: absolute; inset: 0; opacity: 0;
+    cursor: pointer; width: 100%; height: 100%;
+  }
+  .foto-dropzone i { font-size: 32px; color: var(--text-hint); display: block; margin-bottom: 8px; }
+  .foto-dropzone p { font-size: 13px; color: var(--text-muted); }
+  .foto-dropzone small { font-size: 11px; color: var(--text-hint); }
+
+  .foto-preview-wrap { display: none; margin-bottom: 12px; }
+  .foto-preview-wrap.visible { display: block; }
+  .foto-preview-wrap img {
+    width: 100%; max-height: 220px; object-fit: contain;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface-sub);
+  }
+  .foto-preview-info {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 8px; font-size: 12px; color: var(--text-muted);
+  }
+  .foto-preview-info i { font-size: 14px; }
+  .btn-ganti-foto {
+    margin-left: auto;
+    font-size: 12px; color: var(--blue-text);
+    background: none; border: none; cursor: pointer;
+    font-weight: 500; padding: 0;
+  }
+
+  .foto-upload-progress {
+    display: none; margin-top: 10px;
+  }
+  .foto-upload-progress.visible { display: block; }
+  .foto-progress-bar-wrap {
+    height: 3px; background: var(--border); border-radius: 2px; overflow: hidden;
+  }
+  .foto-progress-bar {
+    height: 100%; background: var(--blue);
+    border-radius: 2px; width: 0%; transition: width 0.3s;
+  }
+  .foto-progress-label {
+    font-size: 11px; color: var(--text-hint);
+    text-align: center; margin-top: 6px;
+  }
+
+  .btn-upload-foto {
+    flex: 2; padding: 11px; border-radius: var(--radius-sm);
+    border: none; background: var(--blue); color: #fff;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-upload-foto:active { background: var(--blue-hover); }
+  .btn-upload-foto:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* lightbox */
+  .lightbox {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.88); z-index: 500;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 100%; max-height: 90vh;
+    object-fit: contain; border-radius: var(--radius-sm);
+  }
+  .lightbox-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.15); border: none;
+    color: #fff; font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .card-btn.btn-foto { color: var(--text-muted); }
+
   /* ── STATUS TOGGLE di modal edit ── */
   .status-toggle {
     display: flex;
@@ -832,6 +960,69 @@
   </div>
 </div>
 
+<!-- MODAL FOTO -->
+<div class="overlay" id="modal-foto" role="dialog" aria-modal="true" aria-label="Upload foto bukti" onclick="overlayFotoClick(event)">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <div>
+        <span class="sheet-title">Foto bukti pengiriman</span>
+        <div style="font-size:11px;color:var(--text-hint);margin-top:2px" id="foto-modal-sub"></div>
+      </div>
+      <button class="btn-close" onclick="tutupModalFoto()" aria-label="Tutup">
+        <i class="ti ti-x" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <input type="hidden" id="foto-surat-id">
+
+      <!-- DROP ZONE -->
+      <div class="foto-dropzone" id="foto-dropzone"
+           ondragover="fotoDzDragOver(event)" ondragleave="fotoDzDragLeave()"  ondrop="fotoDzDrop(event)">
+        <input type="file" id="foto-input" accept="image/*" capture="environment"
+               onchange="handleFotoFile(this.files[0])">
+        <i class="ti ti-camera" aria-hidden="true"></i>
+        <p>Ketuk untuk ambil foto atau pilih dari galeri</p>
+        <small>JPG, PNG, HEIC — maks. 5 MB</small>
+      </div>
+
+      <!-- PREVIEW -->
+      <div class="foto-preview-wrap" id="foto-preview-wrap">
+        <img id="foto-preview-img" src="" alt="Preview foto">
+        <div class="foto-preview-info">
+          <i class="ti ti-photo" aria-hidden="true"></i>
+          <span id="foto-preview-name">—</span>
+          <button class="btn-ganti-foto" onclick="gantiFoto()">Ganti</button>
+        </div>
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="foto-upload-progress" id="foto-progress">
+        <div class="foto-progress-bar-wrap">
+          <div class="foto-progress-bar" id="foto-progress-bar"></div>
+        </div>
+        <div class="foto-progress-label" id="foto-progress-label">Mengompres foto...</div>
+      </div>
+    </div>
+
+    <div class="sheet-actions">
+      <button class="btn-cancel" onclick="tutupModalFoto()">Batal</button>
+      <button class="btn-upload-foto" id="btn-upload-foto" onclick="uploadFoto()" disabled>
+        <i class="ti ti-upload" aria-hidden="true"></i>
+        <span id="btn-upload-label">Upload foto</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="tutupLightbox()">
+  <button class="lightbox-close" aria-label="Tutup">
+    <i class="ti ti-x" aria-hidden="true"></i>
+  </button>
+  <img id="lightbox-img" src="" alt="Foto bukti pengiriman">
+</div>
+
 <!-- MODAL IMPORT -->
 <div class="overlay" id="modal-import" role="dialog" aria-modal="true" aria-label="Import dari Excel" onclick="overlayImportClick(event)">
   <div class="sheet">
@@ -905,7 +1096,7 @@
 </div>
 
 <script>
-  const BASE_URL = "https://script.google.com/macros/s/AKfycbxn32U81yG0ckhSvXXY_AjAlp0u7yT5CNtnfDyQcU3YYfirEx69Dseuor7aTHc_aQZy8g/exec";
+  const BASE_URL = "GANTI_DENGAN_URL_EXEC_KAMU";
 
   let semuaData = [];
   let filterAktif = "semua";
@@ -998,6 +1189,18 @@
     const aksiLabel = cls === "sudah" ? "Tandai belum"   : "Tandai terkirim";
     const aksiCls   = cls === "sudah" ? "btn-unkirim"    : "btn-kirim";
 
+    const fotoHtml = s.fotoUrl
+      ? `<div class="card-foto">
+           <img src="https://drive.google.com/thumbnail?id=${extractDriveId(s.fotoUrl)}&sz=w600"
+                alt="Bukti pengiriman" onclick="bukaLightbox('${escAttr(s.fotoUrl)}')"
+                style="cursor:pointer" loading="lazy"
+                onerror="this.parentElement.innerHTML='<div class=card-foto-placeholder><i class=\\'ti ti-photo-off\\'></i>Foto tidak dapat dimuat</div>'">
+           <button class="btn-foto-hapus" onclick="hapusFoto('${s.id}')" aria-label="Hapus foto">
+             <i class="ti ti-x" aria-hidden="true"></i>
+           </button>
+         </div>`
+      : "";
+
     return `<article class="card" id="card-${s.id}">
       <div class="card-inner">
         <div class="card-top">
@@ -1007,10 +1210,15 @@
         ${s.perihal ? `<div class="card-perihal">${escHtml(s.perihal)}</div>` : ""}
         <div class="card-meta">${tgl}</div>
         ${ket}
+        ${fotoHtml}
       </div>
       <div class="card-actions">
         <button class="card-btn btn-edit" onclick="bukaEdit('${s.id}')">
           <i class="ti ti-pencil" aria-hidden="true"></i>Edit
+        </button>
+        <div class="card-divider"></div>
+        <button class="card-btn btn-foto" onclick="bukaModalFoto('${s.id}', '${escAttr(s.namaPenerima)}')">
+          <i class="ti ti-camera" aria-hidden="true"></i>Foto
         </button>
         <div class="card-divider"></div>
         <button class="card-btn ${aksiCls}" onclick="toggleStatus('${s.id}')">
@@ -1204,6 +1412,202 @@
   }
   function escAttr(s) {
     return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;");
+  }
+
+  // =============================================
+  // FOTO BUKTI
+  // =============================================
+  let fotoFile = null;
+  let fotoBase64 = null;
+  let fotoMime = null;
+
+  function bukaModalFoto(id, nama) {
+    document.getElementById("foto-surat-id").value = id;
+    document.getElementById("foto-modal-sub").textContent = nama;
+    resetFotoModal();
+    document.getElementById("modal-foto").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function tutupModalFoto() {
+    document.getElementById("modal-foto").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  function overlayFotoClick(e) {
+    if (e.target === document.getElementById("modal-foto")) tutupModalFoto();
+  }
+  function resetFotoModal() {
+    fotoFile = null; fotoBase64 = null; fotoMime = null;
+    document.getElementById("foto-input").value = "";
+    document.getElementById("foto-dropzone").style.display = "";
+    document.getElementById("foto-preview-wrap").classList.remove("visible");
+    document.getElementById("foto-progress").classList.remove("visible");
+    document.getElementById("foto-progress-bar").style.width = "0%";
+    document.getElementById("btn-upload-foto").disabled = true;
+    document.getElementById("btn-upload-label").textContent = "Upload foto";
+  }
+  function gantiFoto() {
+    document.getElementById("foto-input").value = "";
+    document.getElementById("foto-preview-wrap").classList.remove("visible");
+    document.getElementById("foto-dropzone").style.display = "";
+    document.getElementById("btn-upload-foto").disabled = true;
+    fotoFile = null; fotoBase64 = null;
+  }
+
+  function fotoDzDragOver(e) {
+    e.preventDefault();
+    document.getElementById("foto-dropzone").classList.add("drag-over");
+  }
+  function fotoDzDragLeave() {
+    document.getElementById("foto-dropzone").classList.remove("drag-over");
+  }
+  function fotoDzDrop(e) {
+    e.preventDefault();
+    document.getElementById("foto-dropzone").classList.remove("drag-over");
+    const f = e.dataTransfer.files[0];
+    if (f) handleFotoFile(f);
+  }
+
+  function handleFotoFile(file) {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast("File harus berupa gambar", "warn"); return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast("Ukuran foto maks. 5 MB", "warn"); return;
+    }
+    fotoFile = file;
+    fotoMime = file.type;
+
+    // Kompres sebelum preview & upload
+    kompressFoto(file, 1200, 0.82, (b64, mime) => {
+      fotoBase64 = b64;
+      fotoMime   = mime;
+
+      // Tampilkan preview
+      const previewImg = document.getElementById("foto-preview-img");
+      previewImg.src = "data:" + mime + ";base64," + b64;
+      document.getElementById("foto-preview-name").textContent = file.name;
+      document.getElementById("foto-dropzone").style.display = "none";
+      document.getElementById("foto-preview-wrap").classList.add("visible");
+      document.getElementById("btn-upload-foto").disabled = false;
+    });
+  }
+
+  function kompressFoto(file, maxPx, quality, callback) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        let w = img.width, h = img.height;
+        if (w > maxPx || h > maxPx) {
+          if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+          else       { w = Math.round(w * maxPx / h); h = maxPx; }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = w; canvas.height = h;
+        canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL("image/jpeg", quality);
+        const b64 = dataUrl.split(",")[1];
+        callback(b64, "image/jpeg");
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function uploadFoto() {
+    const id = document.getElementById("foto-surat-id").value;
+    if (!fotoBase64 || !id) return;
+
+    const btn = document.getElementById("btn-upload-foto");
+    const lbl = document.getElementById("btn-upload-label");
+    const prog = document.getElementById("foto-progress");
+    const bar  = document.getElementById("foto-progress-bar");
+    const progLbl = document.getElementById("foto-progress-label");
+
+    btn.disabled = true;
+    prog.classList.add("visible");
+    bar.style.width = "20%";
+    progLbl.textContent = "Mengunggah ke server...";
+
+    try {
+      // POST base64 ke Apps Script (doPost)
+      const resp = await fetch(BASE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          action:   "uploadFoto",
+          id:       id,
+          base64:   fotoBase64,
+          mimeType: fotoMime,
+          filename: "bukti_" + id + "_" + Date.now() + ".jpg"
+        })
+      });
+
+      bar.style.width = "80%";
+      progLbl.textContent = "Menyimpan URL...";
+
+      const r = await resp.json();
+      bar.style.width = "100%";
+
+      if (r.ok) {
+        // Update data lokal
+        const idx = semuaData.findIndex(s => s.id === id);
+        if (idx !== -1) semuaData[idx].fotoUrl = r.viewUrl;
+        updateStats(); renderList();
+        tutupModalFoto();
+        toast("Foto bukti berhasil diupload");
+      } else {
+        toast("Gagal upload: " + r.pesan, "err");
+        prog.classList.remove("visible");
+        btn.disabled = false;
+        lbl.textContent = "Coba lagi";
+      }
+    } catch(e) {
+      toast("Tidak dapat terhubung ke server", "err");
+      prog.classList.remove("visible");
+      btn.disabled = false;
+      lbl.textContent = "Coba lagi";
+    }
+  }
+
+  async function hapusFoto(id) {
+    if (!confirm("Hapus foto bukti ini?")) return;
+    const card = document.getElementById("card-" + id);
+    if (card) card.classList.add("dimmed");
+    try {
+      const r = await api({ action: "hapusFoto", id });
+      if (r.ok) {
+        const idx = semuaData.findIndex(s => s.id === id);
+        if (idx !== -1) semuaData[idx].fotoUrl = "";
+        updateStats(); renderList();
+        toast("Foto dihapus");
+      } else {
+        toast("Gagal: " + r.pesan, "err");
+        if (card) card.classList.remove("dimmed");
+      }
+    } catch(e) {
+      toast("Tidak dapat terhubung ke server", "err");
+      if (card) card.classList.remove("dimmed");
+    }
+  }
+
+  function extractDriveId(url) {
+    const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    return m ? m[1] : "";
+  }
+
+  function bukaLightbox(viewUrl) {
+    const id = extractDriveId(viewUrl);
+    if (!id) return;
+    document.getElementById("lightbox-img").src =
+      "https://drive.google.com/thumbnail?id=" + id + "&sz=w1200";
+    document.getElementById("lightbox").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function tutupLightbox() {
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
   }
 
   // =============================================
