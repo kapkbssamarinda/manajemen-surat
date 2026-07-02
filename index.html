@@ -165,6 +165,29 @@
     text-transform: uppercase; letter-spacing: 0.6px; padding: 8px 0 6px;
   }
 
+  .list-columns { display: block; }
+  .list-col-empty {
+    font-size: 12px; color: var(--text-hint);
+    padding: 14px 12px; text-align: center;
+    border: 1px dashed var(--border); border-radius: var(--radius);
+  }
+
+  /* Desktop: kolom "Belum dikirim" dan "Sudah terkirim" bersebelahan */
+  @media (min-width: 900px) {
+    .header-top, .stats, .toolbar, .list-wrap {
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .list-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .list-columns .section-label { margin-top: 0 !important; }
+  }
+
   .card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); margin-bottom: 8px; overflow: hidden;
@@ -572,17 +595,19 @@
     const sudahList = data.filter(s => s.status === "Sudah Dikirim");
     let html = "";
 
-    if (q) {
+    if (q || filterAktif !== "semua") {
       html = data.map(kartu).join("");
     } else {
-      if (belumList.length) {
-        if (filterAktif === "semua") html += `<div class="section-label">Belum dikirim · ${belumList.length}</div>`;
-        html += belumList.map(kartu).join("");
-      }
-      if (sudahList.length) {
-        if (filterAktif === "semua") html += `<div class="section-label" style="margin-top:8px">Sudah terkirim · ${sudahList.length}</div>`;
-        html += sudahList.map(kartu).join("");
-      }
+      html = `<div class="list-columns">
+        <section class="list-col">
+          <div class="section-label">Belum dikirim · ${belumList.length}</div>
+          ${belumList.length ? belumList.map(kartu).join("") : `<div class="list-col-empty">Tidak ada surat belum dikirim</div>`}
+        </section>
+        <section class="list-col">
+          <div class="section-label" style="margin-top:8px">Sudah terkirim · ${sudahList.length}</div>
+          ${sudahList.length ? sudahList.map(kartu).join("") : `<div class="list-col-empty">Tidak ada surat terkirim</div>`}
+        </section>
+      </div>`;
     }
 
     el.innerHTML = html;
